@@ -98,7 +98,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
             cell.delegate = self
             cell.cellIndex = indexPath.row
             let clothes = listOfClothes[indexPath.row]
-            cell.clothesCategoryLabel?.text = "\(clothes.id+1) \(clothes.category.name)"
+            cell.clothesCategoryLabel?.text = "\(clothes.id+1). \(clothes.category.name)"
             if let price = clothes.price {
                 cell.priceTextField.text = "\(String(price))"
             }

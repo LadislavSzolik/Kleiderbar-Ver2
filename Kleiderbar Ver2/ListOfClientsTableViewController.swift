@@ -36,7 +36,7 @@ class ListOfClientsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
         let client = listOfClients[indexPath.row]
-        cell.textLabel?.text = "\(client.id) \(client.name)"
+        cell.textLabel?.text = "\(client.id+1). \(client.name)"
         cell.detailTextLabel?.text = "Kleider:  \(client.listOfClothes.count)"
         return cell
     }
