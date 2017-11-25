@@ -36,8 +36,18 @@ class ListOfClientsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
         let client = listOfClients[indexPath.row]
-        cell.textLabel?.text = "\(client.id+1). \(client.name)"
-        cell.detailTextLabel?.text = "Kleider:  \(client.listOfShopClothes.count)"
+        cell.textLabel?.text = "\(client.id). \(client.name)"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        let dateOfCreation = dateFormatter.string(from: client.dateOfCreation)
+        
+        var numberOfClothes = 0
+        for clothesList in client.listOfShopClothes {
+            numberOfClothes = numberOfClothes + clothesList.value.count
+        }
+        
+        cell.detailTextLabel?.text = "Datum: \(dateOfCreation), Kleider:  \(numberOfClothes)"
         return cell
     }
     
@@ -69,22 +79,6 @@ class ListOfClientsTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 

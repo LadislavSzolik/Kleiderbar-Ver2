@@ -11,8 +11,8 @@ import UIKit
 class ClientDetailTableViewController: UITableViewController, ListOfClothesDelegate {
   
     var client: Client!
-    var listOfClothes: [Clothes]?
-    var listOfSoldClothes: [Clothes]?
+    var listOfClothes: [String:[Clothes]]?
+    var listOfSoldClothes: [String:[Clothes]]?
     
     @IBOutlet weak var clientNameTextField: UITextField!
     @IBOutlet weak var numberOfClothesLabel: UILabel!
@@ -24,22 +24,15 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
         if let client = client {
             clientNameTextField.text = client.name
         } else {
-            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [])
+            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [:], listOfSoldClothes: [:], dateOfCreation: Date() )
         }
         
-        if let listOfClothes = listOfClothes {
-            numberOfClothesLabel.text = "\(listOfClothes.count) Stk"
-            if let lastClothes =  listOfClothes.last {
-                Clothes.globalId = lastClothes.id
-            }
-            
-        }
+        updateNumberOfClothesLabel()
         udateSaveButton();
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     
@@ -49,7 +42,7 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "SaveClient" {
-            client.listOfShopClothes = listOfClothes ?? []
+            client.listOfShopClothes = listOfClothes ?? [:]
             client.name = clientNameTextField.text!
         } else if segue.identifier == "ShowClothes" {
             let tabBarController = segue.destination as! UITabBarController
@@ -61,25 +54,34 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
                     clothesListController.delegate = self
                     clothesListController.clientId = client.id
                     client.name = clientNameTextField.text!
-                    clothesListController.clientName = client.name
-                    clothesListController.listOfClothes = listOfClothes ?? []
+                    clothesListController.listOfClothes = listOfClothes ?? [:]
                 }
                 
                 let secondController = viewControllers[1]
                 let soldClothesController = secondController as! ListOfSoldClothesTableViewController
-                soldClothesController.listOfSoldClothes = listOfSoldClothes ?? []
+                soldClothesController.listOfSoldClothes = listOfSoldClothes ?? [:]
             }                       
         }
     }
     
-    func didListOfClothesChanged(newListOfClothes: [Clothes]) {
+    func didListOfClothesChanged(newListOfClothes: [String : [Clothes]]) {
         listOfClothes = newListOfClothes
-        numberOfClothesLabel.text = "\(String(describing: listOfClothes!.count)) Stk"
+        updateNumberOfClothesLabel()
         udateSaveButton()
+    }
+    
+    func updateNumberOfClothesLabel() {
+        var shopClothesCount = 0
+        if let listOfClothes = listOfClothes {
+            for clothes in listOfClothes {
+                shopClothesCount = shopClothesCount + clothes.value.count
+            }
+        }
+        numberOfClothesLabel.text = "\(shopClothesCount) Stk"
     }
  
     func udateSaveButton() {
-        if let textField = clientNameTextField.text, let _ = listOfClothes {
+        if let textField = clientNameTextField.text {
             if !textField.isEmpty {
                 saveButton.isEnabled = true
             } else {
@@ -92,5 +94,12 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
 
     @IBAction func clientNameEditingChanged(_ sender: Any) {
         udateSaveButton()
+    }
+    
+    // MARK: - Unwind Segue
+    
+    @IBAction
+    func unwindToClientDetails( segue: UIStoryboardSegue) {
+        
     }
 }

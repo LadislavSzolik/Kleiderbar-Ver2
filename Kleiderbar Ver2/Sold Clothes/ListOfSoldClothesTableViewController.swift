@@ -10,37 +10,39 @@ import UIKit
 
 class ListOfSoldClothesTableViewController: UITableViewController {
 
-    var listOfSoldClothes = [Clothes]()
+    var listOfSoldClothes = [String:[Clothes]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        // Uncomment the following line to preserve selection between presentations
-         self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return listOfSoldClothes.count
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let key = Array(listOfSoldClothes.keys)[section]
+        return key
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listOfSoldClothes.count
+        let key = Array(listOfSoldClothes.keys)[section]
+       return listOfSoldClothes[key]!.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let key = Array(listOfSoldClothes.keys)[indexPath.section]
+        guard let subListOfClothes = listOfSoldClothes[key] else {fatalError("No Clothes for this section")}
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "SoldClothesCell", for: indexPath) as! SoldClothesTableViewCell
-        let soldClothes = listOfSoldClothes[indexPath.row]
+        let soldClothes = subListOfClothes[indexPath.row]
         
         cell.clothesCategoryLabel.text = "\(soldClothes.id+1). \(soldClothes.category.name)"
         
@@ -70,22 +72,7 @@ class ListOfSoldClothesTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+    */  
 
     
     // MARK: - Navigation

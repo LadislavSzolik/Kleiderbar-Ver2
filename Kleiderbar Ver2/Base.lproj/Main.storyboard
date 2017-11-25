@@ -19,55 +19,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ClothesCategoryCell" textLabel="A4b-3q-uF5" detailTextLabel="HJP-Dh-auz" style="IBUITableViewCellStyleValue1" id="CX7-UN-c5e">
-                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CX7-UN-c5e" id="L9l-en-xxN">
-                                    <rect key="frame" x="0.0" y="0.0" width="286" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A4b-3q-uF5">
-                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Leer" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HJP-Dh-auz">
-                                            <rect key="frame" x="251" y="12" width="34" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="6vB-X8-ekx" kind="show" id="Nax-dx-MGI"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="AddClothesCell" id="CCg-Wu-4TJ">
-                                <rect key="frame" x="0.0" y="99.5" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CCg-Wu-4TJ" id="8Xo-x3-BG7">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+ Kleider hinzufügen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktx-TI-Cme">
-                                            <rect key="frame" x="80.5" y="11" width="159" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Ktx-TI-Cme" firstAttribute="centerX" secondItem="8Xo-x3-BG7" secondAttribute="centerX" id="GLc-j9-u9I"/>
-                                        <constraint firstItem="Ktx-TI-Cme" firstAttribute="centerY" secondItem="8Xo-x3-BG7" secondAttribute="centerY" id="zy9-f3-Sst"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClothesCell" id="uxe-PY-63v" customClass="ClothesTableViewCell" customModule="Kleiderbar_Ver2" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="143.5" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uxe-PY-63v" id="WOK-fM-FVV">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -114,12 +67,21 @@
                     <navigationItem key="navigationItem" title="Kleider" id="EkE-RA-acm">
                         <leftBarButtonItems>
                             <barButtonItem id="3S4-3m-P13"/>
-                            <barButtonItem title="Zurück" id="QMU-Jn-zjz"/>
-                        </leftBarButtonItems>
-                        <rightBarButtonItems>
+                            <barButtonItem title="Fertig" id="QMU-Jn-zjz">
+                                <connections>
+                                    <segue destination="aBM-fD-NM5" kind="unwind" unwindAction="unwindToClientDetailsWithSegue:" id="7Tl-mf-EiJ"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Select" id="QSf-Yd-kMA">
                                 <connections>
                                     <action selector="selectButtonTapped:" destination="5cV-yD-6Jk" id="ICZ-ph-IJm"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="mDS-wp-ZuG">
+                                <connections>
+                                    <segue destination="sag-ru-Z5S" kind="presentation" id="DWz-Bh-jPy"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="action" id="wbg-iv-Ay4">
@@ -130,15 +92,87 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="mDS-wp-ZuG" id="PLh-0f-ns2"/>
                         <outlet property="backButton" destination="QMU-Jn-zjz" id="uEf-LY-Xg8"/>
                         <outlet property="printButton" destination="wbg-iv-Ay4" id="EZG-CX-4rv"/>
+                        <outlet property="selectButton" destination="QSf-Yd-kMA" id="L3o-Ud-wWx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSu-jF-xqx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aBM-fD-NM5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1695" y="87.676056338028175"/>
         </scene>
-        <!--Verkauft-->
+        <!--Neue-->
+        <scene sceneID="PHj-1R-dnj">
+            <objects>
+                <tableViewController id="R2U-nu-vxX" customClass="NewClothesTableViewController" customModule="Kleiderbar_Ver2" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="BUI-Ve-BuT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewClothesCell" id="tEq-ew-R6N" customClass="NewClothesTableViewCell" customModule="Kleiderbar_Ver2" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tEq-ew-R6N" id="vpp-DZ-tuR">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="200 Stk." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2v-xd-IAH">
+                                            <rect key="frame" x="147" y="11" width="55" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="RMe-aR-9r3">
+                                            <rect key="frame" x="210" y="7" width="94" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <connections>
+                                                <action selector="stepperValueChanged:" destination="tEq-ew-R6N" eventType="valueChanged" id="Fp5-Dy-axf"/>
+                                            </connections>
+                                        </stepper>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBg-4i-qNf">
+                                            <rect key="frame" x="16" y="11" width="128" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="CategoryLabel" destination="DBg-4i-qNf" id="c6l-dA-Su5"/>
+                                    <outlet property="pieceLabel" destination="v2v-xd-IAH" id="GMy-rb-G8g"/>
+                                    <outlet property="stepper" destination="RMe-aR-9r3" id="mrg-Za-8MK"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="R2U-nu-vxX" id="u8U-Dj-owG"/>
+                            <outlet property="delegate" destination="R2U-nu-vxX" id="ZYU-WK-BQc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Neue" id="69e-LQ-TE1">
+                        <barButtonItem key="leftBarButtonItem" title="Storno" id="nMo-pw-kdr">
+                            <connections>
+                                <segue destination="XvE-wo-JTl" kind="unwind" unwindAction="unwindToListOfClothesWithSegue:" id="tn8-rJ-YSf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Hinzufügen" id="LWP-4E-shB">
+                            <connections>
+                                <segue destination="XvE-wo-JTl" kind="unwind" identifier="AddNewClothes" unwindAction="unwindToListOfClothesWithSegue:" id="WNV-Co-hKx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IBs-EA-YFn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="XvE-wo-JTl" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3540" y="87.676056338028175"/>
+        </scene>
+        <!--Verkaufte Kleider-->
         <scene sceneID="CWO-bL-Eus">
             <objects>
                 <tableViewController id="9zx-cg-AJm" customClass="ListOfSoldClothesTableViewController" customModule="Kleiderbar_Ver2" customModuleProvider="target" sceneMemberID="viewController">
@@ -181,52 +215,19 @@
                             <outlet property="delegate" destination="9zx-cg-AJm" id="AFH-Vs-BCD"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Verkauft" id="tKd-UE-cOI"/>
+                    <navigationItem key="navigationItem" title="Verkaufte Kleider" id="pGR-QK-LjZ">
+                        <barButtonItem key="leftBarButtonItem" title="Fertig" id="qYV-lf-SnQ">
+                            <connections>
+                                <segue destination="GxF-z8-hhI" kind="unwind" unwindAction="unwindToClientDetailsWithSegue:" id="bQE-9A-NBi"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="TnH-KH-fb9"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6KI-qN-dTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="GxF-z8-hhI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="810" y="883.09859154929575"/>
-        </scene>
-        <!--List Of Categories Table View Controller-->
-        <scene sceneID="Pcf-X0-UPv">
-            <objects>
-                <tableViewController id="6vB-X8-ekx" customClass="ListOfCategoriesTableViewController" customModule="Kleiderbar_Ver2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dnr-dr-hOi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClothesCategoryCell" textLabel="jx1-4V-BIx" style="IBUITableViewCellStyleDefault" id="CXp-wI-CaM">
-                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CXp-wI-CaM" id="fA5-zt-2LV">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jx1-4V-BIx">
-                                            <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="6vB-X8-ekx" id="znt-zE-9rI"/>
-                            <outlet property="delegate" destination="6vB-X8-ekx" id="bA2-ZW-uLx"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <segue destination="yfa-PP-Jjg" kind="unwind" identifier="SelectClothesCategory" unwindAction="unwindToListOfClothesWithSegue:" id="OtC-Hn-AEd"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5bV-Id-K9K" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="yfa-PP-Jjg" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="2581.875" y="87.676056338028175"/>
+            <point key="canvasLocation" x="1695" y="883"/>
         </scene>
         <!--Kunde-->
         <scene sceneID="c8h-9U-nVp">
@@ -254,7 +255,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oc8-mC-uk6">
-                                                    <rect key="frame" x="79" y="6" width="225" height="30"/>
+                                                    <rect key="frame" x="79" y="8" width="225" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -266,22 +267,22 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="5Hz-hk-2Gi" detailTextLabel="Qn3-w0-wlT" style="IBUITableViewCellStyleValue1" id="e1S-NQ-VzU">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="5Hz-hk-2Gi" detailTextLabel="Qn3-w0-wlT" style="IBUITableViewCellStyleValue1" id="e1S-NQ-VzU">
                                         <rect key="frame" x="0.0" y="79" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e1S-NQ-VzU" id="97u-ZL-vJW">
-                                            <rect key="frame" x="0.0" y="0.0" width="286" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Kleider" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Hz-hk-2Gi">
-                                                    <rect key="frame" x="16" y="12" width="53.5" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Kleider anschauen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Hz-hk-2Gi">
+                                                    <rect key="frame" x="16" y="12" width="141" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="0 Stk" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qn3-w0-wlT">
-                                                    <rect key="frame" x="245" y="12" width="40" height="20.5"/>
+                                                    <rect key="frame" x="264" y="12" width="40" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -422,7 +423,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="AXz-qT-wQg" kind="relationship" relationship="viewControllers" id="G8U-te-CiQ"/>
-                        <segue destination="9zx-cg-AJm" kind="relationship" relationship="viewControllers" id="v42-to-SVa"/>
+                        <segue destination="5oy-Ds-gXw" kind="relationship" relationship="viewControllers" id="v42-to-SVa"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kOw-ms-wdB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -451,6 +452,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GgS-MV-0oz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="791" y="88"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vZX-NK-fYX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sag-ru-Z5S" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="duo-1s-70F">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="R2U-nu-vxX" kind="relationship" relationship="rootViewController" id="Msn-yd-paB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6X4-rS-GLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2641.875" y="87.676056338028175"/>
+        </scene>
+        <!--Verkauft-->
+        <scene sceneID="D72-gf-TI8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5oy-Ds-gXw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Verkauft" id="tKd-UE-cOI"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mSu-Jh-98s">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9zx-cg-AJm" kind="relationship" relationship="rootViewController" id="9ci-M0-6WV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wkY-iD-edU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="810" y="883.09859154929575"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

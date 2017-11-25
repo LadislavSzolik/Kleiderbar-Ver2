@@ -14,12 +14,13 @@
 		84C305651FB73147008D33E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C305641FB73147008D33E7 /* Assets.xcassets */; };
 		84C305681FB73147008D33E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C305661FB73147008D33E7 /* LaunchScreen.storyboard */; };
 		84C305701FB734AF008D33E7 /* ListOfClothesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3056F1FB734AF008D33E7 /* ListOfClothesTableViewController.swift */; };
-		84C305721FB734C4008D33E7 /* ListOfCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C305711FB734C4008D33E7 /* ListOfCategoriesTableViewController.swift */; };
 		84C305741FB734FA008D33E7 /* Clothes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C305731FB734FA008D33E7 /* Clothes.swift */; };
 		84C305761FB74080008D33E7 /* ClothesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C305751FB74080008D33E7 /* ClothesTableViewCell.swift */; };
 		84C3057A1FB790C8008D33E7 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C305791FB790C8008D33E7 /* Client.swift */; };
 		84C3057C1FB79D73008D33E7 /* ListOfClientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3057B1FB79D73008D33E7 /* ListOfClientsTableViewController.swift */; };
 		84C3057E1FB79F20008D33E7 /* ClientDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3057D1FB79F20008D33E7 /* ClientDetailTableViewController.swift */; };
+		84F538011FC97DA00082F40D /* NewClothesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F538001FC97DA00082F40D /* NewClothesTableViewCell.swift */; };
+		84F538031FC97F5E0082F40D /* NewClothesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F538021FC97F5E0082F40D /* NewClothesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,12 +33,13 @@
 		84C305671FB73147008D33E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84C305691FB73147008D33E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84C3056F1FB734AF008D33E7 /* ListOfClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfClothesTableViewController.swift; sourceTree = "<group>"; };
-		84C305711FB734C4008D33E7 /* ListOfCategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfCategoriesTableViewController.swift; sourceTree = "<group>"; };
 		84C305731FB734FA008D33E7 /* Clothes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clothes.swift; sourceTree = "<group>"; };
 		84C305751FB74080008D33E7 /* ClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesTableViewCell.swift; sourceTree = "<group>"; };
 		84C305791FB790C8008D33E7 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		84C3057B1FB79D73008D33E7 /* ListOfClientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfClientsTableViewController.swift; sourceTree = "<group>"; };
 		84C3057D1FB79F20008D33E7 /* ClientDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientDetailTableViewController.swift; sourceTree = "<group>"; };
+		84F538001FC97DA00082F40D /* NewClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClothesTableViewCell.swift; sourceTree = "<group>"; };
+		84F538021FC97F5E0082F40D /* NewClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClothesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,22 +72,55 @@
 		84C3055C1FB73147008D33E7 /* Kleiderbar Ver2 */ = {
 			isa = PBXGroup;
 			children = (
+				84C3055D1FB73147008D33E7 /* AppDelegate.swift */,
 				84C305731FB734FA008D33E7 /* Clothes.swift */,
 				84C305791FB790C8008D33E7 /* Client.swift */,
-				84C305711FB734C4008D33E7 /* ListOfCategoriesTableViewController.swift */,
-				84C3056F1FB734AF008D33E7 /* ListOfClothesTableViewController.swift */,
-				84C305751FB74080008D33E7 /* ClothesTableViewCell.swift */,
-				84C3055D1FB73147008D33E7 /* AppDelegate.swift */,
+				84F538061FC9FD6B0082F40D /* Client */,
+				84F538051FC9FD470082F40D /* Shop Clothes */,
+				84F538041FC981940082F40D /* New Clothes */,
+				84F538071FCA00D40082F40D /* Sold Clothes */,
 				84C305611FB73147008D33E7 /* Main.storyboard */,
-				84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */,
-				84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */,
-				84C3057B1FB79D73008D33E7 /* ListOfClientsTableViewController.swift */,
-				84C3057D1FB79F20008D33E7 /* ClientDetailTableViewController.swift */,
 				84C305641FB73147008D33E7 /* Assets.xcassets */,
 				84C305661FB73147008D33E7 /* LaunchScreen.storyboard */,
 				84C305691FB73147008D33E7 /* Info.plist */,
 			);
 			path = "Kleiderbar Ver2";
+			sourceTree = "<group>";
+		};
+		84F538041FC981940082F40D /* New Clothes */ = {
+			isa = PBXGroup;
+			children = (
+				84F538021FC97F5E0082F40D /* NewClothesTableViewController.swift */,
+				84F538001FC97DA00082F40D /* NewClothesTableViewCell.swift */,
+			);
+			path = "New Clothes";
+			sourceTree = "<group>";
+		};
+		84F538051FC9FD470082F40D /* Shop Clothes */ = {
+			isa = PBXGroup;
+			children = (
+				84C3056F1FB734AF008D33E7 /* ListOfClothesTableViewController.swift */,
+				84C305751FB74080008D33E7 /* ClothesTableViewCell.swift */,
+			);
+			path = "Shop Clothes";
+			sourceTree = "<group>";
+		};
+		84F538061FC9FD6B0082F40D /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				84C3057B1FB79D73008D33E7 /* ListOfClientsTableViewController.swift */,
+				84C3057D1FB79F20008D33E7 /* ClientDetailTableViewController.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		84F538071FCA00D40082F40D /* Sold Clothes */ = {
+			isa = PBXGroup;
+			children = (
+				84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */,
+				84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */,
+			);
+			path = "Sold Clothes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,6 +149,9 @@
 		84C305521FB73147008D33E7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 0910;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Ladislav Szolik";
@@ -162,12 +200,13 @@
 			files = (
 				84C305761FB74080008D33E7 /* ClothesTableViewCell.swift in Sources */,
 				84C3057E1FB79F20008D33E7 /* ClientDetailTableViewController.swift in Sources */,
-				84C305721FB734C4008D33E7 /* ListOfCategoriesTableViewController.swift in Sources */,
 				84C3057C1FB79D73008D33E7 /* ListOfClientsTableViewController.swift in Sources */,
 				84111DDC1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift in Sources */,
 				84C3057A1FB790C8008D33E7 /* Client.swift in Sources */,
 				84C3055E1FB73147008D33E7 /* AppDelegate.swift in Sources */,
 				84C305741FB734FA008D33E7 /* Clothes.swift in Sources */,
+				84F538011FC97DA00082F40D /* NewClothesTableViewCell.swift in Sources */,
+				84F538031FC97F5E0082F40D /* NewClothesTableViewController.swift in Sources */,
 				84111DDA1FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift in Sources */,
 				84C305701FB734AF008D33E7 /* ListOfClothesTableViewController.swift in Sources */,
 			);

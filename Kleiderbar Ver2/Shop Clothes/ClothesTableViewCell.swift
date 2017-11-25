@@ -9,13 +9,13 @@
 import UIKit
 
 protocol ClothesCellDelegate {
-    func didPriceChanged(cellIndex: Int, price: Double)
+    func didPriceChanged(cellIndex: IndexPath, price: Double)
 }
 
 class ClothesTableViewCell: UITableViewCell {
 
     var delegate: ClothesCellDelegate?
-    var cellIndex:Int?
+    var cellIndex:IndexPath?
     @IBOutlet weak var clothesPriceTextField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var clothesCategoryLabel: UILabel!

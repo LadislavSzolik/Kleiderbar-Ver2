@@ -12,8 +12,9 @@ import Foundation
 struct Client : Codable {
      var id: Int
     var name: String   
-    var listOfShopClothes: [Clothes]
-    var listOfSoldClothes: [Clothes]
+    var listOfShopClothes: [String:[Clothes]]
+    var listOfSoldClothes: [String:[Clothes]]
+    var dateOfCreation: Date
     
     static var globalId = 0
     static func getNextId() -> Int {
