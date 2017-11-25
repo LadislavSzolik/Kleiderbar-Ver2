@@ -12,6 +12,7 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
   
     var client: Client!
     var listOfClothes: [Clothes]?
+    var listOfSoldClothes: [Clothes]?
     
     @IBOutlet weak var clientNameTextField: UITextField!
     @IBOutlet weak var numberOfClothesLabel: UILabel!
@@ -23,11 +24,15 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
         if let client = client {
             clientNameTextField.text = client.name
         } else {
-            client = Client(id: Client.getNextId(), name: "", listOfClothes: [])
+            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [])
         }
         
         if let listOfClothes = listOfClothes {
             numberOfClothesLabel.text = "\(listOfClothes.count) Stk"
+            if let lastClothes =  listOfClothes.last {
+                Clothes.globalId = lastClothes.id
+            }
+            
         }
         udateSaveButton();
     }
@@ -44,15 +49,26 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "SaveClient" {
-            client.listOfClothes = listOfClothes ?? []
+            client.listOfShopClothes = listOfClothes ?? []
             client.name = clientNameTextField.text!
         } else if segue.identifier == "ShowClothes" {
-            let clothesListController = segue.destination as! ListOfClothesTableViewController
-            clothesListController.delegate = self
-            clothesListController.clientId = client.id
-            client.name = clientNameTextField.text!
-            clothesListController.clientName = client.name
-            clothesListController.listOfClothes = listOfClothes ?? []
+            let tabBarController = segue.destination as! UITabBarController
+            
+            if let viewControllers = tabBarController.viewControllers {
+                if let fistController = viewControllers.first  {
+                    let navigationController = fistController as! UINavigationController
+                    let clothesListController = navigationController.topViewController  as! ListOfClothesTableViewController
+                    clothesListController.delegate = self
+                    clothesListController.clientId = client.id
+                    client.name = clientNameTextField.text!
+                    clothesListController.clientName = client.name
+                    clothesListController.listOfClothes = listOfClothes ?? []
+                }
+                
+                let secondController = viewControllers[1]
+                let soldClothesController = secondController as! ListOfSoldClothesTableViewController
+                soldClothesController.listOfSoldClothes = listOfSoldClothes ?? []
+            }                       
         }
     }
     

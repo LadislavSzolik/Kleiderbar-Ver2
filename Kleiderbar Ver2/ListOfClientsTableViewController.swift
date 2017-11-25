@@ -37,7 +37,7 @@ class ListOfClientsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
         let client = listOfClients[indexPath.row]
         cell.textLabel?.text = "\(client.id+1). \(client.name)"
-        cell.detailTextLabel?.text = "Kleider:  \(client.listOfClothes.count)"
+        cell.detailTextLabel?.text = "Kleider:  \(client.listOfShopClothes.count)"
         return cell
     }
     
@@ -96,7 +96,7 @@ class ListOfClientsTableViewController: UITableViewController {
                 let navigationController = segue.destination as! UINavigationController
                 let clientController = navigationController.topViewController as! ClientDetailTableViewController
                 clientController.client = client
-                clientController.listOfClothes = client.listOfClothes
+                clientController.listOfClothes = client.listOfShopClothes
             }
         }
     }

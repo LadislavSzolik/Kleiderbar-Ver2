@@ -12,7 +12,8 @@ import Foundation
 struct Client : Codable {
      var id: Int
     var name: String   
-    var listOfClothes: [Clothes]
+    var listOfShopClothes: [Clothes]
+    var listOfSoldClothes: [Clothes]
     
     static var globalId = 0
     static func getNextId() -> Int {
@@ -33,7 +34,12 @@ struct Client : Codable {
     static func loadClients() -> [Client]? {
         guard let codedClients = try? Data(contentsOf: ArchiveURL) else {return nil}
         let propertyListDecoder = PropertyListDecoder()
-        return try? propertyListDecoder.decode(Array<Client>.self, from: codedClients)
+        let clientList = try? propertyListDecoder.decode(Array<Client>.self, from: codedClients)
+        if let lastClient = clientList?.last {
+            Client.globalId = lastClient.id
+        }
+        
+        return clientList
     }
     
 }

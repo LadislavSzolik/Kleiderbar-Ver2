@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84111DDA1FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */; };
+		84111DDC1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */; };
 		84C3055E1FB73147008D33E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3055D1FB73147008D33E7 /* AppDelegate.swift */; };
 		84C305631FB73147008D33E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C305611FB73147008D33E7 /* Main.storyboard */; };
 		84C305651FB73147008D33E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C305641FB73147008D33E7 /* Assets.xcassets */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSoldClothesTableViewController.swift; sourceTree = "<group>"; };
+		84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoldClothesTableViewCell.swift; sourceTree = "<group>"; };
 		84C3055A1FB73147008D33E7 /* Kleiderbar Ver2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kleiderbar Ver2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C3055D1FB73147008D33E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84C305621FB73147008D33E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -73,6 +77,8 @@
 				84C305751FB74080008D33E7 /* ClothesTableViewCell.swift */,
 				84C3055D1FB73147008D33E7 /* AppDelegate.swift */,
 				84C305611FB73147008D33E7 /* Main.storyboard */,
+				84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */,
+				84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */,
 				84C3057B1FB79D73008D33E7 /* ListOfClientsTableViewController.swift */,
 				84C3057D1FB79F20008D33E7 /* ClientDetailTableViewController.swift */,
 				84C305641FB73147008D33E7 /* Assets.xcassets */,
@@ -158,9 +164,11 @@
 				84C3057E1FB79F20008D33E7 /* ClientDetailTableViewController.swift in Sources */,
 				84C305721FB734C4008D33E7 /* ListOfCategoriesTableViewController.swift in Sources */,
 				84C3057C1FB79D73008D33E7 /* ListOfClientsTableViewController.swift in Sources */,
+				84111DDC1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift in Sources */,
 				84C3057A1FB790C8008D33E7 /* Client.swift in Sources */,
 				84C3055E1FB73147008D33E7 /* AppDelegate.swift in Sources */,
 				84C305741FB734FA008D33E7 /* Clothes.swift in Sources */,
+				84111DDA1FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift in Sources */,
 				84C305701FB734AF008D33E7 /* ListOfClothesTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

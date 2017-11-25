@@ -20,17 +20,57 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     var clientId: Int?
     var delegate: ListOfClothesDelegate?
     @IBOutlet weak var printButton: UIBarButtonItem!
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    
+    var navigationToolbar: UIToolbar?
+    
+    var listOfSoldClothesController: ListOfSoldClothesTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+            
         
+        tableView.allowsMultipleSelectionDuringEditing = true
+        
+        setupToolbar()
         updatePrintButton()
+    }
+    
+    func setupToolbar() {
+        let items=[
+            UIBarButtonItem(title: "Verkaufen", style: UIBarButtonItemStyle.plain, target: self, action: #selector(sellClothes(sender:)))
+        ]
+        
+        items[0].isEnabled = false
+        setToolbarItems(items, animated: false)
+        
+        let navigationController = parent as! UINavigationController
+        navigationToolbar = navigationController.toolbar
+        
+        let tabBarController = navigationController.parent as! UITabBarController
+        if let viewControllers = tabBarController.viewControllers {
+            listOfSoldClothesController = viewControllers[1] as! ListOfSoldClothesTableViewController
+        }
+    }
+    
+    @objc func sellClothes(sender: UIBarButtonItem) {
+        
+        // construct array with clothes to sell
+        var soldClothes = [Clothes]()
+        for rowIndex in tableView.indexPathsForSelectedRows! {
+            let clothesToSell = listOfClothes[rowIndex.row]
+            listOfClothes.remove(at: rowIndex.row)
+            soldClothes.append(clothesToSell)
+        }
+        
+        
+        tableView.setEditing(false, animated: true)
+        if let navigationToolbar = navigationToolbar {
+            navigationToolbar.isHidden = true
+        }
+        tableView.reloadData()
+        listOfSoldClothesController?.listOfSoldClothes = soldClothes
+        
     }
     
     func updatePrintButton() {
@@ -38,8 +78,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         if let _ = clientId, let _ = clientName {
             isClientEntered = true
         }
-        
-        printButton.isEnabled = listOfClothes.count > 0 &&  isClientEntered ? true : false
+        //printButton.isEnabled = listOfClothes.count > 0 &&  isClientEntered ? true : false
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +100,10 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         } else {
            return listOfClothes.count
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44.0
     }
 
     @IBAction
@@ -107,7 +150,10 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if !tableView.isEditing {
+          tableView.deselectRow(at: indexPath, animated: true)
+        }
         
         if indexPath.section == 0 && indexPath.row == 1 {
             if let selectedCategory = currentClothesCategory {
@@ -118,15 +164,38 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
                 updatePrintButton()
                 tableView.reloadData()
             }
-           
         }
+        
+        if indexPath.section == 1  {
+            if let selectedRows = tableView.indexPathsForSelectedRows {
+                if selectedRows.count > 0{
+                  
+                    toggleSellToolbarButton(isEnabled: true)
+                }
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1  {
+            if tableView.indexPathsForSelectedRows == nil {
+                toggleSellToolbarButton(isEnabled: false)
+            }
+        }
+    }
+    
+    func toggleSellToolbarButton(isEnabled: Bool) {
+        guard let configuredToolbarItems = toolbarItems else {
+            fatalError("No toolbar Item added, but tried to access!")
+        }
+        configuredToolbarItems[0].isEnabled = isEnabled
+        
     }
     
     func didPriceChanged(cellIndex: Int, price: Double) {
         listOfClothes[cellIndex].price = price
         delegate?.didListOfClothesChanged(newListOfClothes: listOfClothes)
     }
-    
 
     func buildPdfContent() -> String {
         guard let clientId = clientId, let clientName = clientName else {return "" }
@@ -192,18 +261,43 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     
-    /*
+    
+    @IBAction func selectButtonTapped(_ sender: UIBarButtonItem) {
+        
+        // create a boolean instead of text check
+        if sender.title == "Select" {
+           tableView.setEditing(true, animated: true)
+            sender.title = "Cancel"
+            backButton.isEnabled = false
+            printButton.isEnabled = false
+            if let navigationToolbar = navigationToolbar {
+                navigationToolbar.isHidden = false
+            }
+        } else {
+            tableView.setEditing(false, animated: true)
+            sender.title = "Select"
+            backButton.isEnabled = true
+            printButton.isEnabled = true
+            if let navigationToolbar = navigationToolbar {
+                navigationToolbar.isHidden = true
+            }
+        }
+        
+    }
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
+        if indexPath.section == 0 {
+            return false;
+        }
         return true
     }
-    */
+    
 
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        if indexPath.section == 1 {
+        /*if indexPath.section == 1 {
                 return .delete
-        }
+        }*/
         return .none
     }
     
@@ -216,23 +310,6 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
             }
         }
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
