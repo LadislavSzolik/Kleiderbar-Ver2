@@ -10,7 +10,7 @@ import UIKit
 
 class ListOfSoldClothesTableViewController: UITableViewController {
 
-    var listOfSoldClothes = [String:[Clothes]]()
+    var listOfSoldClothes = [String: [Clothes]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +48,8 @@ class ListOfSoldClothesTableViewController: UITableViewController {
         
         if let price = soldClothes.price {
            cell.priceLabel.text = "\(String(price)) Fr."
+        } else {
+            cell.priceLabel.text = "kein Price"
         }
         
         return cell

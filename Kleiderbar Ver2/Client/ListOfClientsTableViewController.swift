@@ -42,12 +42,7 @@ class ListOfClientsTableViewController: UITableViewController {
         dateFormatter.dateStyle = .medium
         let dateOfCreation = dateFormatter.string(from: client.dateOfCreation)
         
-        var numberOfClothes = 0
-        for clothesList in client.listOfShopClothes {
-            numberOfClothes = numberOfClothes + clothesList.value.count
-        }
-        
-        cell.detailTextLabel?.text = "Datum: \(dateOfCreation), Kleider:  \(numberOfClothes)"
+        cell.detailTextLabel?.text = "Datum: \(dateOfCreation), Kleider:  \(client.totalNumberOfClothes)"
         return cell
     }
     
@@ -89,8 +84,7 @@ class ListOfClientsTableViewController: UITableViewController {
                 let client = listOfClients[selectedRow.row]
                 let navigationController = segue.destination as! UINavigationController
                 let clientController = navigationController.topViewController as! ClientDetailTableViewController
-                clientController.client = client
-                clientController.listOfClothes = client.listOfShopClothes
+                clientController.client = client                
             }
         }
     }

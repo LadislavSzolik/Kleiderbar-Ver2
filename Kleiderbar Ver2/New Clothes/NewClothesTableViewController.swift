@@ -66,7 +66,7 @@ class NewClothesTableViewController: UITableViewController, NewClothesCellDelega
                 if let category = ClothesCategory.all.first(where: { (category) -> Bool in
                     return category.id == newItem.key
                 }) {
-                    let newClothes =  Clothes(id: Clothes.getNextId() , category: category, price: nil, dateOfCreation: Date())
+                    let newClothes =  Clothes(id: Clothes.getNextId() , category: category, price: nil, dateOfCreation: Date(), status: .inShop, moneyGivenBack: false )
                     listOfNewClothes.append(newClothes)
                 }
             }

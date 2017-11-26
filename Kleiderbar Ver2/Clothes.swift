@@ -33,6 +33,8 @@ struct Clothes: Codable {
     var category: ClothesCategory
     var price: Double?
     var dateOfCreation: Date
+    var status: ClothesStatus
+    var moneyGivenBack: Bool
     
     static var globalId = 0
     static func getNextId() -> Int {
@@ -40,4 +42,10 @@ struct Clothes: Codable {
         Clothes.globalId = Clothes.globalId + 1
         return  currentId
     }
+}
+
+enum ClothesStatus: String, Codable  {
+    case inShop = "inShop"
+    case sold = "sold"
+    case inStore = "inStore"
 }

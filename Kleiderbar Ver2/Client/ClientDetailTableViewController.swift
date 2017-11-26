@@ -8,26 +8,24 @@
 
 import UIKit
 
-class ClientDetailTableViewController: UITableViewController, ListOfClothesDelegate {
+class ClientDetailTableViewController: UITableViewController {
   
     var client: Client!
-    var listOfClothes: [String:[Clothes]]?
-    var listOfSoldClothes: [String:[Clothes]]?
     
     @IBOutlet weak var clientNameTextField: UITextField!
     @IBOutlet weak var numberOfClothesLabel: UILabel!
+    @IBOutlet weak var numberOfSoldClothes: UILabel!
+    @IBOutlet weak var numberOfStoreClothes: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let client = client {
             clientNameTextField.text = client.name
         } else {
-            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [:], listOfSoldClothes: [:], dateOfCreation: Date() )
+            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [:], listOfSoldClothes: [:], listOfStoreClothes: [:], dateOfCreation: Date() )
         }
-        
-        updateNumberOfClothesLabel()
+        updateNumberOfClothesLabels()
         udateSaveButton();
     }
 
@@ -36,48 +34,25 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
     }
 
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    func updateNumberOfClothesLabels() {
+        var shopCount = 0
+        for keys in client.listOfShopClothes {
+            shopCount = shopCount + keys.value.count
+        }
         
-        if segue.identifier == "SaveClient" {
-            client.listOfShopClothes = listOfClothes ?? [:]
-            client.name = clientNameTextField.text!
-        } else if segue.identifier == "ShowClothes" {
-            let tabBarController = segue.destination as! UITabBarController
-            
-            if let viewControllers = tabBarController.viewControllers {
-                if let fistController = viewControllers.first  {
-                    let navigationController = fistController as! UINavigationController
-                    let clothesListController = navigationController.topViewController  as! ListOfClothesTableViewController
-                    clothesListController.delegate = self
-                    clothesListController.clientId = client.id
-                    client.name = clientNameTextField.text!
-                    clothesListController.listOfClothes = listOfClothes ?? [:]
-                }
-                
-                let secondController = viewControllers[1]
-                let soldClothesController = secondController as! ListOfSoldClothesTableViewController
-                soldClothesController.listOfSoldClothes = listOfSoldClothes ?? [:]
-            }                       
+        var soldCount = 0
+        for keys in client.listOfSoldClothes {
+            soldCount = soldCount + keys.value.count
         }
-    }
-    
-    func didListOfClothesChanged(newListOfClothes: [String : [Clothes]]) {
-        listOfClothes = newListOfClothes
-        updateNumberOfClothesLabel()
-        udateSaveButton()
-    }
-    
-    func updateNumberOfClothesLabel() {
-        var shopClothesCount = 0
-        if let listOfClothes = listOfClothes {
-            for clothes in listOfClothes {
-                shopClothesCount = shopClothesCount + clothes.value.count
-            }
+        
+        var storeCount = 0
+        for keys in client.listOfStoreClothes {
+            storeCount = storeCount + keys.value.count
         }
-        numberOfClothesLabel.text = "\(shopClothesCount) Stk"
+     
+        numberOfClothesLabel.text = "\(shopCount) Stk"
+        numberOfSoldClothes.text = "\(soldCount) Stk"
+        numberOfStoreClothes.text = "\(storeCount) Stk"
     }
  
     func udateSaveButton() {
@@ -100,6 +75,43 @@ class ClientDetailTableViewController: UITableViewController, ListOfClothesDeleg
     
     @IBAction
     func unwindToClientDetails( segue: UIStoryboardSegue) {
-        
+        if segue.identifier == "SaveShopClothes" {
+            let shopClothesController = segue.source as! ListOfClothesTableViewController
+            client.listOfShopClothes = shopClothesController.listOfShopClothes
+            
+            // SELL
+            if shopClothesController.listOfToBeSoldClothes.count > 0 {
+                client.listOfSoldClothes = Client.appendClothesList(list: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes)
+            }
+            
+            // STORE
+            if shopClothesController.listOfToBeStoredClothes.count > 0 {
+                client.listOfStoreClothes = Client.appendClothesList(list: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes)
+            }
+        }
+        updateNumberOfClothesLabels()
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SaveClient" {
+            client.name = clientNameTextField.text!
+        } else if segue.identifier == "ShowShopClothes" {
+            let navigationController = segue.destination as! UINavigationController
+            let clothesListController = navigationController.topViewController  as! ListOfClothesTableViewController
+            clothesListController.clientId = client.id
+            clothesListController.listOfShopClothes = client.listOfShopClothes
+            
+        } else if segue.identifier == "ShowSoldClothes" {
+            let navigationController = segue.destination as! UINavigationController
+            let soldClothesController = navigationController.topViewController as! ListOfSoldClothesTableViewController
+            soldClothesController.listOfSoldClothes = client.listOfSoldClothes
+        } else if segue.identifier == "ShowStoreClothes" {
+            let navigationController = segue.destination as! UINavigationController
+            let storeClothesController = navigationController.topViewController as! ListOfStoreClothesTableViewController
+            storeClothesController.listOfStoreClothes = client.listOfStoreClothes
+        }
+    }
+    
 }
