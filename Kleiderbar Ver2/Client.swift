@@ -99,12 +99,32 @@ struct Client : Codable {
     static func loadClients() -> [Client]? {
         guard let codedClients = try? Data(contentsOf: ArchiveURL) else {return nil}
         let propertyListDecoder = PropertyListDecoder()
-        let clientList = try? propertyListDecoder.decode(Array<Client>.self, from: codedClients)
-        if let lastClient = clientList?.last {
-            Client.globalId = lastClient.id
-        }
-        
+        let clientList = try? propertyListDecoder.decode(Array<Client>.self, from: codedClients)      
         return clientList
     }
     
+    
+    static let ArchiveURLForClientId = DocumentsDirectory.appendingPathComponent("clientsId")
+    
+    static func saveClientId(_ clientId: Int) {
+        let id =  UniqueClientId(id: clientId)
+        let propertyListEncoder = PropertyListEncoder()
+        let codedId = try? propertyListEncoder.encode(id)
+        try? codedId?.write(to: ArchiveURLForClientId, options: .noFileProtection)
+    }
+    
+    static func loadLastClientId() -> Int {
+        guard let codedId = try? Data(contentsOf: ArchiveURLForClientId) else {return 0}
+        let propertyListDecoder = PropertyListDecoder()
+        if let clientId = try? propertyListDecoder.decode(UniqueClientId.self, from: codedId) {
+            return clientId.id
+        } else {
+            return 0
+        }
+    }
+    
+}
+
+struct UniqueClientId: Codable {
+    var id: Int
 }

@@ -27,6 +27,9 @@ struct ClothesCategory: Equatable, Codable {
     
 }
 
+struct UniqueClothesId: Codable {
+    var id:Int
+}
 
 struct Clothes: Codable {
     var id: Int
@@ -41,6 +44,26 @@ struct Clothes: Codable {
         let currentId = Clothes.globalId
         Clothes.globalId = Clothes.globalId + 1
         return  currentId
+    }
+    
+    static let DocumentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("clothesLastId")
+    
+    static func saveClothesId(_ clothesId: Int) {
+        let id =  UniqueClothesId(id: clothesId)
+        let propertyListEncoder = PropertyListEncoder()
+        let codedId = try? propertyListEncoder.encode(id)
+        try? codedId?.write(to: ArchiveURL, options: .noFileProtection)
+    }
+    
+    static func loadLastClothesId() -> Int {
+        guard let codedId = try? Data(contentsOf: ArchiveURL) else {return 0}
+        let propertyListDecoder = PropertyListDecoder()
+        if let clothesId = try? propertyListDecoder.decode(UniqueClothesId.self, from: codedId) {
+             return clothesId.id
+        } else {
+            return 0
+        }
     }
 }
 

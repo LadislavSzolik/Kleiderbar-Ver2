@@ -9,13 +9,13 @@
 import UIKit
 
 protocol ClothesCellDelegate {
-    func didPriceChanged(cellIndex: IndexPath, price: Double)
+    func didPriceChanged(sender: ClothesTableViewCell)
 }
 
 class ClothesTableViewCell: UITableViewCell {
 
     var delegate: ClothesCellDelegate?
-    var cellIndex:IndexPath?
+    
     @IBOutlet weak var clothesPriceTextField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var clothesCategoryLabel: UILabel!
@@ -48,8 +48,6 @@ class ClothesTableViewCell: UITableViewCell {
     }
 
     @IBAction func clothesPriceEdited(_ sender: UITextField) {
-        if let priceText = priceTextField.text, let price = Double(priceText), let index = cellIndex {            
-            delegate?.didPriceChanged(cellIndex: index, price: price)
-        }
+        delegate?.didPriceChanged(sender: self)        
     }
 }

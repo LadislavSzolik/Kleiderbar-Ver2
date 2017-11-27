@@ -57,6 +57,8 @@ class ListOfStoreClothesTableViewController: UITableViewController {
         cell.clothesCategoryLabel?.text = "\(clothes.id+1). \(clothes.category.name)"
         if let price = clothes.price {
             cell.priceTextField.text = "\(String(price))"
+        } else {
+            cell.priceTextField.text = ""
         }
         return cell
     }

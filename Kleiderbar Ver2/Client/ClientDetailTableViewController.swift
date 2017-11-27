@@ -23,7 +23,9 @@ class ClientDetailTableViewController: UITableViewController {
         if let client = client {
             clientNameTextField.text = client.name
         } else {
+            Client.globalId = Client.loadLastClientId()
             client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [:], listOfSoldClothes: [:], listOfStoreClothes: [:], dateOfCreation: Date() )
+            Client.saveClientId(Client.globalId)
         }
         updateNumberOfClothesLabels()
         udateSaveButton();

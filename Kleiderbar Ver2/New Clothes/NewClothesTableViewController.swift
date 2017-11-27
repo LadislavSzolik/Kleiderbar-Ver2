@@ -60,7 +60,9 @@ class NewClothesTableViewController: UITableViewController, NewClothesCellDelega
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "AddNewClothes" else {return}
-        
+                
+        Clothes.globalId = Clothes.loadLastClothesId()
+          
         for newItem in clothesToCreate {
             for _ in  1...newItem.value {
                 if let category = ClothesCategory.all.first(where: { (category) -> Bool in
@@ -71,6 +73,8 @@ class NewClothesTableViewController: UITableViewController, NewClothesCellDelega
                 }
             }
         }
+        print("saving id: \( Clothes.globalId )")
+        Clothes.saveClothesId(Clothes.globalId)
     }
     
 
