@@ -35,7 +35,8 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     func setupToolbar() {
         let items=[
             UIBarButtonItem(title: "Verkaufen", style: UIBarButtonItemStyle.plain, target: self, action: #selector(sellClothes(sender:))),
-            UIBarButtonItem(title: "Zum Lager", style: UIBarButtonItemStyle.plain, target: self, action: #selector(storeClothes(sender:)))
+            UIBarButtonItem(title: "Zum Lager", style: UIBarButtonItemStyle.plain, target: self, action: #selector(storeClothes(sender:))),
+            UIBarButtonItem(title: "Löschen", style: UIBarButtonItemStyle.plain, target: self, action: #selector(deleteClothes(sender:)))
         ]
         setToolbarItems(items, animated: false)
         let navigationController = parent as! UINavigationController
@@ -46,8 +47,8 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     @objc func sellClothes(sender: UIBarButtonItem) {
         let selectedClothes = getSelectedClothesId()
         
-        listOfToBeSoldClothes = Client.getClothesListBasedOnIds(from: listOfShopClothes, idList: selectedClothes)
-        listOfShopClothes = Client.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
+        listOfToBeSoldClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .sold)
+        listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
         
         tableView.setEditing(false, animated: true)
         tableView.reloadData()
@@ -57,8 +58,18 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
      @objc func storeClothes(sender: UIBarButtonItem) {
         let selectedClothes = getSelectedClothesId()
         
-        listOfToBeStoredClothes = Client.getClothesListBasedOnIds(from: listOfShopClothes, idList: selectedClothes)
-        listOfShopClothes = Client.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
+        listOfToBeStoredClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .inStore)
+        listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
+        
+        tableView.setEditing(false, animated: true)
+        tableView.reloadData()
+        updateNavigationActionButtons()
+    }
+    
+    @objc func deleteClothes(sender: UIBarButtonItem) {
+        let selectedClothes = getSelectedClothesId()
+        
+        listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
         
         tableView.setEditing(false, animated: true)
         tableView.reloadData()
@@ -155,6 +166,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         }
         configuredToolbarItems[0].isEnabled = isEnabled
         configuredToolbarItems[1].isEnabled = isEnabled
+        configuredToolbarItems[2].isEnabled = isEnabled
     }
     
     func didPriceChanged(sender: ClothesTableViewCell) {
@@ -166,7 +178,6 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
                 clothes.price = Double(priceText)
             }
             listOfShopClothes[key]![indexPath.row] = clothes
-            //tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
 
@@ -283,8 +294,6 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
                 printButton.isEnabled = true
             }
         }
-        
-       
     }
     
     // MARK: - Segue
@@ -303,7 +312,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
                 var listOfNewClothesDictionary = [String: [Clothes]]()
                 listOfNewClothesDictionary[creationDateString] = listOfNewClothes
                 
-                listOfShopClothes = Client.appendClothesList(list: listOfShopClothes, with: listOfNewClothesDictionary)
+                listOfShopClothes = Clothes.appendClothesList(list: listOfShopClothes, with: listOfNewClothesDictionary)
                 
                 updateNavigationActionButtons()
                 tableView.reloadData()

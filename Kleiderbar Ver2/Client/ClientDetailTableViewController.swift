@@ -83,14 +83,29 @@ class ClientDetailTableViewController: UITableViewController {
             
             // SELL
             if shopClothesController.listOfToBeSoldClothes.count > 0 {
-                client.listOfSoldClothes = Client.appendClothesList(list: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes)
+                client.listOfSoldClothes = Clothes.appendClothesList(list: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes)
             }
             
             // STORE
             if shopClothesController.listOfToBeStoredClothes.count > 0 {
-                client.listOfStoreClothes = Client.appendClothesList(list: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes)
+                client.listOfStoreClothes = Clothes.appendClothesList(list: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes)
+            }
+        } else if segue.identifier == "SaveSoldClothes" {
+            let soldClothesController = segue.source as! ListOfSoldClothesTableViewController
+            client.listOfSoldClothes = soldClothesController.listOfSoldClothes
+            
+            // SHOP
+            if soldClothesController.listOfClothesToBeMovedIntoShop.count > 0 {
+                client.listOfShopClothes = Clothes.appendClothesList(list: client.listOfShopClothes, with: soldClothesController.listOfClothesToBeMovedIntoShop)
+            }
+            
+            // STORE
+            if soldClothesController.listOfToBeStoredClothes.count > 0 {
+                client.listOfStoreClothes = Clothes.appendClothesList(list: client.listOfStoreClothes, with: soldClothesController.listOfToBeStoredClothes)
             }
         }
+        
+        
         updateNumberOfClothesLabels()
     }
     

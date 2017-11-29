@@ -61,19 +61,17 @@ class NewClothesTableViewController: UITableViewController, NewClothesCellDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "AddNewClothes" else {return}
                 
-        Clothes.globalId = Clothes.loadLastClothesId()
-          
+        Clothes.globalId = Clothes.loadLastClothesId()          
         for newItem in clothesToCreate {
             for _ in  1...newItem.value {
                 if let category = ClothesCategory.all.first(where: { (category) -> Bool in
                     return category.id == newItem.key
                 }) {
-                    let newClothes =  Clothes(id: Clothes.getNextId() , category: category, price: nil, dateOfCreation: Date(), status: .inShop, moneyGivenBack: false )
+                    let newClothes =  Clothes(id: Clothes.getNextId() , category: category, price: nil, dateOfCreation: Date(), dateOfSell: nil, dateOfStore: nil, status: .inShop, moneyGivenBack: false )
                     listOfNewClothes.append(newClothes)
                 }
             }
         }
-        print("saving id: \( Clothes.globalId )")
         Clothes.saveClothesId(Clothes.globalId)
     }
     

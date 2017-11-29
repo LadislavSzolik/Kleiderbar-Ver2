@@ -32,54 +32,6 @@ struct Client : Codable {
         return count
     }
     
-    
-    static func getClothesListBasedOnIds(from listOfClothes: [String: [Clothes]], idList listOfClothesId: [Int]  ) -> [String: [Clothes]] {
-        let listOfFilteredClothes = listOfClothes.mapValues { (listOfClothes) -> [Clothes] in
-            return listOfClothes.filter({ (clothes) -> Bool in
-                return listOfClothesId.contains(where: { (id) -> Bool in
-                    return id == clothes.id
-                })
-            })
-        }
-        
-        return listOfFilteredClothes
-    }
-    
-    static func removeFromClothesList(from listOfCurrentClothes: [String: [Clothes]], idList listOfClothesId: [Int] ) -> [String: [Clothes]] {
-        var newlistOfClothes =  [String: [Clothes]]()
-        
-        for currentClothes in listOfCurrentClothes {
-            let truncatedList = currentClothes.value.filter({ (clothes) -> Bool in
-                return !listOfClothesId.contains(where: { (id) -> Bool in
-                    return id == clothes.id
-                })
-            })
-            newlistOfClothes[currentClothes.key] = truncatedList
-        }
-        return newlistOfClothes
-    }
-    
-    
-    static func appendClothesList(list listOfCurrentClothes: [String: [Clothes]], with listOfNewClothes: [String: [Clothes]]) -> [String: [Clothes]] {
-        var listOfCurrentClothes = listOfCurrentClothes
-        if listOfNewClothes.count > 0 {
-            for newClothesKey in listOfNewClothes {
-                let creationDate = newClothesKey.key
-                
-                if listOfCurrentClothes.contains(where: { (key, value) -> Bool in
-                    return key == creationDate
-                }) {
-                    var listOfSubClothes = listOfCurrentClothes[creationDate]
-                    listOfSubClothes?.append(contentsOf: newClothesKey.value)
-                    listOfCurrentClothes.updateValue(listOfSubClothes!, forKey: creationDate)
-                } else {
-                    listOfCurrentClothes[creationDate] = newClothesKey.value
-                }
-            }
-        }
-        return listOfCurrentClothes
-    }
-    
     static var globalId = 0
     static func getNextId() -> Int {
         let currentId = Client.globalId

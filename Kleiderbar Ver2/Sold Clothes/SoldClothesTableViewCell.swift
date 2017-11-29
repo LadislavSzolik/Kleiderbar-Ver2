@@ -12,6 +12,7 @@ class SoldClothesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var clothesCategoryLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var creationDateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
