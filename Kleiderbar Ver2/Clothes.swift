@@ -78,6 +78,43 @@ struct Clothes: Codable {
         }
         return listOfFilteredClothes
     }
+    static func getClothesArray(from listOfClothes: [String: [Clothes]]) ->  [Clothes] {
+        let listOfClothesAllValues = listOfClothes.map{ $0.value }
+        let flatListOfClothesAllValues = listOfClothesAllValues.flatMap{ $0}
+        return flatListOfClothesAllValues
+    }
+    
+    
+    static func getClothesArrayById(from listOfClothes: [String: [Clothes]], idList listOfClothesId: [Int]  ) ->  [Clothes] {
+        var clothesArray = Clothes.getClothesArray(from: listOfClothes)
+        clothesArray = clothesArray.filter({ (clothes) -> Bool in
+            return listOfClothesId.contains(clothes.id)
+        })
+        return clothesArray
+    }
+    
+    static func mergeClothesArrayToDictionaryBasedOnDateOfCreation(inArray arrayOfClothes: [Clothes], target listOfClothes: [String: [Clothes]] ) -> [String: [Clothes]] {
+        var listOfMergedClothes = listOfClothes
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        
+        for clothes in arrayOfClothes {
+            let clothesDate = dateFormatter.string(from: clothes.dateOfCreation)
+            if listOfMergedClothes.contains(where: { (key, value) -> Bool in
+                return key == clothesDate
+            }) {
+                if var currentList = listOfMergedClothes[clothesDate] {
+                    currentList.append(clothes)
+                    currentList = currentList.sorted(by: { (clothes1, clothes2) -> Bool in
+                        return clothes1.id < clothes2.id
+                    })
+                    listOfMergedClothes.updateValue(currentList, forKey: clothesDate)
+                }
+            }
+        }
+        return listOfMergedClothes
+        
+    }
     
     static func createNewClothesList(from listOfClothes: [String: [Clothes]], idList listOfClothesId: [Int] , to status: ClothesStatus ) -> [String: [Clothes]] {
         // Prepare new section header
@@ -108,6 +145,38 @@ struct Clothes: Codable {
         return newListOfClothes
     }
     
+    static func createNewClothesListFromArray(from arrayOfClothes: [Clothes] ) -> [String: [Clothes]] {
+        var newListOfClothes = [String : [Clothes]]()
+       
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd. MM. yyyy"
+        
+        for clothes in arrayOfClothes {
+           
+            let clothesDate = dateFormatter.string(from: clothes.dateOfCreation)
+            
+            if newListOfClothes.contains(where: { (key, value) -> Bool in
+                return key == clothesDate
+            }) {
+                if var currentList = newListOfClothes[clothesDate] {
+                    currentList.append(clothes)
+                   /* currentList = currentList.sorted(by: { (clothes1, clothes2) -> Bool in
+                        return clothes1.id > clothes2.id
+                    }) */
+                    newListOfClothes.updateValue(currentList, forKey: clothesDate)
+                }
+            } else {
+                var newList = [Clothes]()
+                newList.append(clothes)
+                newListOfClothes[clothesDate] = newList
+            }
+        }
+       
+        return newListOfClothes
+    }
+    
+    
+    
     static func removeFromClothesList(from listOfCurrentClothes: [String: [Clothes]], idList listOfClothesId: [Int] ) -> [String: [Clothes]] {
         var newlistOfClothes =  [String: [Clothes]]()
         
@@ -123,27 +192,38 @@ struct Clothes: Codable {
     }
     
     
-    static func appendClothesList(list listOfCurrentClothes: [String: [Clothes]], with listOfNewClothes: [String: [Clothes]]) -> [String: [Clothes]] {
+    static func appendClothesList(list listOfCurrentClothes: [ClothesTable], with listOfNewClothes:[Clothes]) -> [ClothesTable] {
         var listOfCurrentClothes = listOfCurrentClothes
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd. MM. yyyy"
+        
         if listOfNewClothes.count > 0 {
-            for newClothesKey in listOfNewClothes {
-                let creationDate = newClothesKey.key
+            for newClothes in listOfNewClothes {
+                let creationDate =  dateFormatter.string(from: newClothes.dateOfCreation)
                 
-                if listOfCurrentClothes.contains(where: { (key, value) -> Bool in
-                    return key == creationDate
+                if  let index = listOfCurrentClothes.index(where: { (clothesTable) -> Bool in
+                    let clothesTableHeaderDate =  dateFormatter.string(from: clothesTable.headerDate)
+                    return clothesTableHeaderDate == creationDate
                 }) {
-                    var listOfSubClothes = listOfCurrentClothes[creationDate]
-                    listOfSubClothes?.append(contentsOf: newClothesKey.value)
-                    listOfCurrentClothes.updateValue(listOfSubClothes!, forKey: creationDate)
+                    var listOfSubClothes = listOfCurrentClothes[index].clothesList
+                    listOfSubClothes.append(newClothes)
+                    listOfCurrentClothes[index].clothesList = listOfSubClothes
                 } else {
-                    listOfCurrentClothes[creationDate] = newClothesKey.value
+                    var newClothesList = [Clothes]()
+                    newClothesList.append(newClothes)
+                    var clothesTable = ClothesTable(headerDate: newClothes.dateOfCreation, clothesList: newClothesList )                    
+                    clothesTable.clothesList = newClothesList
+                    listOfCurrentClothes.append(clothesTable)
                 }
             }
         }
-        return listOfCurrentClothes
+        return listOfCurrentClothes.sorted(by: { $0.headerDate.compare($1.headerDate) == .orderedDescending })
     }
-        
-    
+}
+
+struct ClothesTable: Codable {
+    var headerDate: Date
+    var clothesList: [Clothes]
 }
 
 enum ClothesStatus: String, Codable  {
@@ -151,3 +231,5 @@ enum ClothesStatus: String, Codable  {
     case sold = "sold"
     case inStore = "inStore"
 }
+
+

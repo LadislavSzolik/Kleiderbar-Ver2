@@ -24,7 +24,7 @@ class ClientDetailTableViewController: UITableViewController {
             clientNameTextField.text = client.name
         } else {
             Client.globalId = Client.loadLastClientId()
-            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [:], listOfSoldClothes: [:], listOfStoreClothes: [:], dateOfCreation: Date() )
+            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [:], listOfStoreClothes: [:], dateOfCreation: Date() )
             Client.saveClientId(Client.globalId)
         }
         updateNumberOfClothesLabels()
@@ -38,8 +38,8 @@ class ClientDetailTableViewController: UITableViewController {
     
     func updateNumberOfClothesLabels() {
         var shopCount = 0
-        for keys in client.listOfShopClothes {
-            shopCount = shopCount + keys.value.count
+        for clothesTable in client.listOfShopClothes {
+            shopCount = shopCount + clothesTable.clothesList.count
         }
         
         var soldCount = 0
@@ -83,12 +83,12 @@ class ClientDetailTableViewController: UITableViewController {
             
             // SELL
             if shopClothesController.listOfToBeSoldClothes.count > 0 {
-                client.listOfSoldClothes = Clothes.appendClothesList(list: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes)
+                //client.listOfSoldClothes = Clothes.appendClothesList(list: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes)
             }
             
             // STORE
             if shopClothesController.listOfToBeStoredClothes.count > 0 {
-                client.listOfStoreClothes = Clothes.appendClothesList(list: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes)
+                //client.listOfStoreClothes = Clothes.appendClothesList(list: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes)
             }
         } else if segue.identifier == "SaveSoldClothes" {
             let soldClothesController = segue.source as! ListOfSoldClothesTableViewController
@@ -96,12 +96,12 @@ class ClientDetailTableViewController: UITableViewController {
             
             // SHOP
             if soldClothesController.listOfClothesToBeMovedIntoShop.count > 0 {
-                client.listOfShopClothes = Clothes.appendClothesList(list: client.listOfShopClothes, with: soldClothesController.listOfClothesToBeMovedIntoShop)
+                //client.listOfShopClothes = Clothes.mergeClothesArrayToDictionaryBasedOnDateOfCreation(inArray: soldClothesController.listOfClothesToBeMovedIntoShop, target: client.listOfShopClothes)
             }
             
             // STORE
             if soldClothesController.listOfToBeStoredClothes.count > 0 {
-                client.listOfStoreClothes = Clothes.appendClothesList(list: client.listOfStoreClothes, with: soldClothesController.listOfToBeStoredClothes)
+                
             }
         }
         
@@ -112,14 +112,28 @@ class ClientDetailTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        
         if segue.identifier == "SaveClient" {
             client.name = clientNameTextField.text!
+            
         } else if segue.identifier == "ShowShopClothes" {
             let navigationController = segue.destination as! UINavigationController
             let clothesListController = navigationController.topViewController  as! ListOfClothesTableViewController
             clothesListController.clientId = client.id
-            clothesListController.listOfShopClothes = client.listOfShopClothes
             
+            /*
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd. MM. yyyy"
+            guard let testDate = dateFormatter.date(from: "22. 11. 2017") else {return}
+            print("executed")
+            let testClothes1 = Clothes(id: 1, category: ClothesCategory.all[0] , price: 22, dateOfCreation: testDate, dateOfSell: nil, dateOfStore: nil, status: .inShop, moneyGivenBack: false)
+            let testClothesList = [testClothes1]
+            let clothesTable1 = ClothesTable(headerDate: testDate, clothesList: testClothesList)
+            client.listOfShopClothes = [clothesTable1]*/                       
+                
+            clothesListController.listOfShopClothes = client.listOfShopClothes
         } else if segue.identifier == "ShowSoldClothes" {
             let navigationController = segue.destination as! UINavigationController
             let soldClothesController = navigationController.topViewController as! ListOfSoldClothesTableViewController

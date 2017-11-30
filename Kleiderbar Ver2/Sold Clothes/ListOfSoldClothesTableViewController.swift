@@ -11,7 +11,7 @@ import UIKit
 class ListOfSoldClothesTableViewController: UITableViewController {
 
     var listOfSoldClothes = [String: [Clothes]]()
-    var listOfClothesToBeMovedIntoShop = [String: [Clothes]]()
+    var listOfClothesToBeMovedIntoShop = [Clothes]()
     var listOfToBeStoredClothes = [String: [Clothes]]()
     
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -49,7 +49,7 @@ class ListOfSoldClothesTableViewController: UITableViewController {
     @objc func putClothesToShop(sender: UIBarButtonItem) {
         let selectedClothes = getSelectedClothesId()
         
-        listOfClothesToBeMovedIntoShop = Clothes.getClothesListBasedOnIds(from: listOfSoldClothes, idList: selectedClothes)
+        listOfClothesToBeMovedIntoShop = Clothes.getClothesArrayById(from: listOfSoldClothes, idList: selectedClothes)
         listOfSoldClothes = Clothes.removeFromClothesList(from: listOfSoldClothes, idList: selectedClothes)
         
         tableView.setEditing(false, animated: true)

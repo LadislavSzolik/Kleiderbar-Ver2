@@ -14,7 +14,8 @@ protocol ListOfClothesDelegate {
 
 class ListOfClothesTableViewController: UITableViewController, ClothesCellDelegate {
     
-    var listOfShopClothes = [String: [Clothes]]()
+    var listOfShopClothes = [ClothesTable]()
+    var selectedClothes = [Clothes]()
     var listOfToBeSoldClothes = [String: [Clothes]]()
     var listOfToBeStoredClothes = [String: [Clothes]]()
     var clientId: Int?
@@ -24,10 +25,12 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     @IBOutlet weak var selectButton: UIBarButtonItem!
     
     var navigationToolbar: UIToolbar?
+    let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsMultipleSelectionDuringEditing = true
+        dateFormatter.dateFormat = "dd. MM. yyyy"
         setupToolbar()
         updateNavigationActionButtons()
     }
@@ -45,10 +48,9 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     @objc func sellClothes(sender: UIBarButtonItem) {
-        let selectedClothes = getSelectedClothesId()
         
-        listOfToBeSoldClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .sold)
-        listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
+        //listOfToBeSoldClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .sold)
+        //listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
         
         tableView.setEditing(false, animated: true)
         tableView.reloadData()
@@ -56,10 +58,9 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
      @objc func storeClothes(sender: UIBarButtonItem) {
-        let selectedClothes = getSelectedClothesId()
         
-        listOfToBeStoredClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .inStore)
-        listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
+        //listOfToBeStoredClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .inStore)
+        //listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
         
         tableView.setEditing(false, animated: true)
         tableView.reloadData()
@@ -67,26 +68,13 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     @objc func deleteClothes(sender: UIBarButtonItem) {
-        let selectedClothes = getSelectedClothesId()
         
-        listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
+        //listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
         
         tableView.setEditing(false, animated: true)
         tableView.reloadData()
         updateNavigationActionButtons()
-    }
-    
-    func getSelectedClothesId() -> [Int] {
-        var selectedClothesId = [Int]()
-        if let selectedClothesIndex = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedClothesIndex {
-                let key = Array(listOfShopClothes.keys)[indexPath.section]
-                let clothesId = listOfShopClothes[key]![indexPath.row].id
-                selectedClothesId.append(clothesId)
-            }
-        }
-        return selectedClothesId
-    }
+    }        
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -99,13 +87,13 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let key = Array(listOfShopClothes.keys)[section]
-        return key
+        let sectionHeader = dateFormatter.string(from: listOfShopClothes[section].headerDate)
+        return sectionHeader
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let key = Array(listOfShopClothes.keys)[section]
-        return listOfShopClothes[key]!.count
+        let clothesTable = listOfShopClothes[section]
+        return clothesTable.clothesList.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -113,11 +101,10 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let key = Array(listOfShopClothes.keys)[indexPath.section]
-        guard let subListOfClothes = listOfShopClothes[key] else {fatalError("No Clothes for this section")}
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClothesCell", for: indexPath) as! ClothesTableViewCell
         cell.delegate = self
-        let clothes = subListOfClothes[indexPath.row]
+        let clothesTableList = listOfShopClothes[indexPath.section].clothesList
+        let clothes = clothesTableList[indexPath.row]
         cell.clothesCategoryLabel?.text = "\(clothes.id+1). \(clothes.category.name)"
         if let price = clothes.price {
             cell.priceTextField.text = "\(String(price))"
@@ -133,12 +120,18 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         }
         if let selectedRows = tableView.indexPathsForSelectedRows {
             if selectedRows.count > 0 {
+                selectedClothes.append(listOfShopClothes[indexPath.section].clothesList[indexPath.row])
                 toggleToolbarButtons(isEnabled: true)
             }
         }
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let index = selectedClothes.index(where: {(clothes) -> Bool in
+            return clothes.id == listOfShopClothes[indexPath.section].clothesList[indexPath.row].id
+        }) {
+            selectedClothes.remove(at: index)
+        }
         if tableView.indexPathsForSelectedRows == nil {
             toggleToolbarButtons(isEnabled: false)
         }
@@ -154,8 +147,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let key = Array(listOfShopClothes.keys)[indexPath.section]
-            listOfShopClothes[key]?.remove(at: indexPath.row)
+            listOfShopClothes[indexPath.section].clothesList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -171,13 +163,12 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     
     func didPriceChanged(sender: ClothesTableViewCell) {
         if let indexPath = tableView.indexPath(for: sender) {
-            let key = Array(listOfShopClothes.keys)[indexPath.section]
-            var clothes = listOfShopClothes[key]![indexPath.row]
+            var clothes = listOfShopClothes[indexPath.section].clothesList[indexPath.row]
             
             if let priceText = sender.priceTextField.text {
                 clothes.price = Double(priceText)
             }
-            listOfShopClothes[key]![indexPath.row] = clothes
+            listOfShopClothes[indexPath.section].clothesList[indexPath.row] = clothes
         }
     }
 
@@ -187,13 +178,13 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         var pdfPages = [String]()
         
         var soldCount = 0
-        for keys in listOfShopClothes {
-            soldCount = soldCount + keys.value.count
+        for clothesTable in listOfShopClothes {
+            soldCount = soldCount + clothesTable.clothesList.count
         }
         var count = 0
         var pdfContent = ""
         for section in listOfShopClothes {
-            for clothes in section.value {
+            for clothes in section.clothesList {
                 count = count + 1
                 
                 if count % 12 == 1 {
@@ -303,17 +294,9 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         if segue.identifier == "AddNewClothes" {
             let newClothesController = segue.source as! NewClothesTableViewController
             let listOfNewClothes = newClothesController.listOfNewClothes
+            
             if listOfNewClothes.count > 0 {
-                let creationDate = listOfNewClothes.first!.dateOfCreation
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .medium
-                let creationDateString = dateFormatter.string(from: creationDate)
-               
-                var listOfNewClothesDictionary = [String: [Clothes]]()
-                listOfNewClothesDictionary[creationDateString] = listOfNewClothes
-                
-                listOfShopClothes = Clothes.appendClothesList(list: listOfShopClothes, with: listOfNewClothesDictionary)
-                
+                listOfShopClothes = Clothes.appendClothesList(list: listOfShopClothes, with: listOfNewClothes)
                 updateNavigationActionButtons()
                 tableView.reloadData()
             }
