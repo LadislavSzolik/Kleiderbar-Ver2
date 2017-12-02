@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kleiderbar Ver2/ListOfClothesTableViewController.swift"
+            timestampString = "533331236.863837"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "ListOfClothesTableViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kleiderbar_Ver2.ListOfClothesTableViewController.listOfClothes.getter : Swift.Array&lt;Kleiderbar_Ver2.Clothes&gt;"
+                  moduleName = "Kleiderbar Ver2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ladislavszolik/iOS/Kleiderbar%20Ver2/Kleiderbar%20Ver2/ListOfClothesTableViewController.swift"
+                  timestampString = "532988308.931942"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "109">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kleiderbar_Ver2.ListOfClothesTableViewController.listOfClothes.setter : Swift.Array&lt;Kleiderbar_Ver2.Clothes&gt;"
+                  moduleName = "Kleiderbar Ver2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ladislavszolik/iOS/Kleiderbar%20Ver2/Kleiderbar%20Ver2/ListOfClothesTableViewController.swift"
+                  timestampString = "532988308.937264"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kleiderbar_Ver2.ListOfClothesTableViewController.init(style: __C.UITableViewStyle) -&gt; Kleiderbar_Ver2.ListOfClothesTableViewController"
+                  moduleName = "Kleiderbar Ver2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ladislavszolik/iOS/Kleiderbar%20Ver2/Kleiderbar%20Ver2/ListOfClothesTableViewController.swift"
+                  timestampString = "532988308.939568"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "262">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kleiderbar_Ver2.ListOfClothesTableViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; Kleiderbar_Ver2.ListOfClothesTableViewController"
+                  moduleName = "Kleiderbar Ver2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ladislavszolik/iOS/Kleiderbar%20Ver2/Kleiderbar%20Ver2/ListOfClothesTableViewController.swift"
+                  timestampString = "532988308.941577"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "351">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Kleiderbar_Ver2.ListOfClothesTableViewController.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Kleiderbar_Ver2.ListOfClothesTableViewController&gt;"
+                  moduleName = "Kleiderbar Ver2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ladislavszolik/iOS/Kleiderbar%20Ver2/Kleiderbar%20Ver2/ListOfClothesTableViewController.swift"
+                  timestampString = "532988308.943479"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "262">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Kleiderbar Ver2/Client/ListOfClientsTableViewController.swift"
+            timestampString = "533895422.136786"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "tableView(_:commit:forRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -30,7 +30,7 @@
 		84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoldClothesTableViewCell.swift; sourceTree = "<group>"; };
 		849F07521FCB02790056A6EA /* ListOfStoreClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfStoreClothesTableViewController.swift; sourceTree = "<group>"; };
 		849F07541FCB03570056A6EA /* StoreClothesCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreClothesCellTableViewCell.swift; sourceTree = "<group>"; };
-		84C3055A1FB73147008D33E7 /* Kleiderbar Ver2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kleiderbar Ver2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84C3055A1FB73147008D33E7 /* Kleiderbar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kleiderbar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C3055D1FB73147008D33E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84C305621FB73147008D33E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84C305641FB73147008D33E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		84C305511FB73147008D33E7 = {
 			isa = PBXGroup;
 			children = (
-				84C3055C1FB73147008D33E7 /* Kleiderbar Ver2 */,
+				84C3055C1FB73147008D33E7 /* Kleiderbar */,
 				84C3055B1FB73147008D33E7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,12 +77,12 @@
 		84C3055B1FB73147008D33E7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84C3055A1FB73147008D33E7 /* Kleiderbar Ver2.app */,
+				84C3055A1FB73147008D33E7 /* Kleiderbar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		84C3055C1FB73147008D33E7 /* Kleiderbar Ver2 */ = {
+		84C3055C1FB73147008D33E7 /* Kleiderbar */ = {
 			isa = PBXGroup;
 			children = (
 				84C3055D1FB73147008D33E7 /* AppDelegate.swift */,
@@ -98,7 +98,7 @@
 				84C305661FB73147008D33E7 /* LaunchScreen.storyboard */,
 				84C305691FB73147008D33E7 /* Info.plist */,
 			);
-			path = "Kleiderbar Ver2";
+			path = Kleiderbar;
 			sourceTree = "<group>";
 		};
 		84F538041FC981940082F40D /* New Clothes */ = {
@@ -140,9 +140,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		84C305591FB73147008D33E7 /* Kleiderbar Ver2 */ = {
+		84C305591FB73147008D33E7 /* Kleiderbar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84C3056C1FB73147008D33E7 /* Build configuration list for PBXNativeTarget "Kleiderbar Ver2" */;
+			buildConfigurationList = 84C3056C1FB73147008D33E7 /* Build configuration list for PBXNativeTarget "Kleiderbar" */;
 			buildPhases = (
 				84C305561FB73147008D33E7 /* Sources */,
 				84C305571FB73147008D33E7 /* Frameworks */,
@@ -152,9 +152,9 @@
 			);
 			dependencies = (
 			);
-			name = "Kleiderbar Ver2";
+			name = Kleiderbar;
 			productName = "Kleiderbar Ver2";
-			productReference = 84C3055A1FB73147008D33E7 /* Kleiderbar Ver2.app */;
+			productReference = 84C3055A1FB73147008D33E7 /* Kleiderbar.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -176,7 +176,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 84C305551FB73147008D33E7 /* Build configuration list for PBXProject "Kleiderbar Ver2" */;
+			buildConfigurationList = 84C305551FB73147008D33E7 /* Build configuration list for PBXProject "Kleiderbar" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -189,7 +189,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				84C305591FB73147008D33E7 /* Kleiderbar Ver2 */,
+				84C305591FB73147008D33E7 /* Kleiderbar */,
 			);
 		};
 /* End PBXProject section */
@@ -363,7 +363,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HK2W6XPHLH;
-				INFOPLIST_FILE = "Kleiderbar Ver2/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Kleiderbar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.szolik.Kleiderbar;
@@ -379,7 +379,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HK2W6XPHLH;
-				INFOPLIST_FILE = "Kleiderbar Ver2/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Kleiderbar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.szolik.Kleiderbar;
@@ -392,7 +392,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		84C305551FB73147008D33E7 /* Build configuration list for PBXProject "Kleiderbar Ver2" */ = {
+		84C305551FB73147008D33E7 /* Build configuration list for PBXProject "Kleiderbar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84C3056A1FB73147008D33E7 /* Debug */,
@@ -401,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84C3056C1FB73147008D33E7 /* Build configuration list for PBXNativeTarget "Kleiderbar Ver2" */ = {
+		84C3056C1FB73147008D33E7 /* Build configuration list for PBXNativeTarget "Kleiderbar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84C3056D1FB73147008D33E7 /* Debug */,
