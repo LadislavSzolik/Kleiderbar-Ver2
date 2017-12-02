@@ -17,14 +17,17 @@ class ClientDetailTableViewController: UITableViewController {
     @IBOutlet weak var numberOfSoldClothes: UILabel!
     @IBOutlet weak var numberOfStoreClothes: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
+    let dateFormatter = DateFormatter()
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        
         if let client = client {
             clientNameTextField.text = client.name
         } else {
             Client.globalId = Client.loadLastClientId()
-            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [:], listOfStoreClothes: [:], dateOfCreation: Date() )
+            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [], listOfStoreClothes: [], dateOfCreation: Date() )
             Client.saveClientId(Client.globalId)
         }
         updateNumberOfClothesLabels()
@@ -43,13 +46,13 @@ class ClientDetailTableViewController: UITableViewController {
         }
         
         var soldCount = 0
-        for keys in client.listOfSoldClothes {
-            soldCount = soldCount + keys.value.count
+        for clothesTable in client.listOfSoldClothes {
+            soldCount = soldCount + clothesTable.clothesList.count
         }
         
         var storeCount = 0
-        for keys in client.listOfStoreClothes {
-            storeCount = storeCount + keys.value.count
+        for clothesTable in client.listOfStoreClothes {
+            storeCount = storeCount + clothesTable.clothesList.count
         }
      
         numberOfClothesLabel.text = "\(shopCount) Stk"
@@ -57,6 +60,10 @@ class ClientDetailTableViewController: UITableViewController {
         numberOfStoreClothes.text = "\(storeCount) Stk"
     }
  
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func udateSaveButton() {
         if let textField = clientNameTextField.text {
             if !textField.isEmpty {
@@ -83,12 +90,12 @@ class ClientDetailTableViewController: UITableViewController {
             
             // SELL
             if shopClothesController.listOfToBeSoldClothes.count > 0 {
-                //client.listOfSoldClothes = Clothes.appendClothesList(list: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes)
+                client.listOfSoldClothes = appendListOfClothes(target: client.listOfSoldClothes, with: shopClothesController.listOfToBeSoldClothes, for: .sold)
             }
             
             // STORE
             if shopClothesController.listOfToBeStoredClothes.count > 0 {
-                //client.listOfStoreClothes = Clothes.appendClothesList(list: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes)
+                client.listOfStoreClothes = appendListOfClothes(target: client.listOfStoreClothes, with: shopClothesController.listOfToBeStoredClothes, for: .inStore)
             }
         } else if segue.identifier == "SaveSoldClothes" {
             let soldClothesController = segue.source as! ListOfSoldClothesTableViewController
@@ -96,24 +103,62 @@ class ClientDetailTableViewController: UITableViewController {
             
             // SHOP
             if soldClothesController.listOfClothesToBeMovedIntoShop.count > 0 {
-                //client.listOfShopClothes = Clothes.mergeClothesArrayToDictionaryBasedOnDateOfCreation(inArray: soldClothesController.listOfClothesToBeMovedIntoShop, target: client.listOfShopClothes)
+              client.listOfShopClothes = appendListOfClothes(target: client.listOfShopClothes, with: soldClothesController.listOfClothesToBeMovedIntoShop, for: .inShop)
             }
             
             // STORE
             if soldClothesController.listOfToBeStoredClothes.count > 0 {
-                
+                client.listOfStoreClothes = appendListOfClothes(target: client.listOfStoreClothes, with: soldClothesController.listOfToBeStoredClothes, for: .inStore)
+            }
+        } else if segue.identifier == "SaveStoreClothes" {
+            
+            let storeClothesController = segue.source as! ListOfStoreClothesTableViewController
+            client.listOfStoreClothes = storeClothesController.listOfStoreClothes
+            
+            // SHOP
+            if storeClothesController.listOfClothesToBeMovedIntoShop.count > 0 {
+                client.listOfShopClothes = appendListOfClothes(target: client.listOfShopClothes, with: storeClothesController.listOfClothesToBeMovedIntoShop, for: .inShop)
             }
         }
-        
-        
         updateNumberOfClothesLabels()
+    }
+    
+    func appendListOfClothes(target listOfClothesTables: [ClothesTable], with listOfClothes: [Clothes], for clothesStatus: ClothesStatus ) -> [ClothesTable] {
+        var dateToUse = Date()
+        switch clothesStatus {
+        case .inShop:
+            dateToUse = listOfClothes.first!.dateOfCreation
+        case .inStore:
+            dateToUse = listOfClothes.first!.dateOfStore!
+        case .sold:
+            dateToUse = listOfClothes.first!.dateOfSell!
+        }
+                
+        var appendedListOfClothesTables = listOfClothesTables
+        if appendedListOfClothesTables.count == 0 {
+            appendedListOfClothesTables.append( ClothesTable(headerDate: dateToUse, clothesList: listOfClothes))
+        } else {
+            let storeDateString = dateFormatter.string(from: dateToUse)
+            for i in 0...appendedListOfClothesTables.count-1 {
+                var clothesTable = appendedListOfClothesTables[i]
+                let tableDateString = dateFormatter.string(from: clothesTable.headerDate)
+                if tableDateString == storeDateString {
+                    clothesTable.clothesList.append(contentsOf: listOfClothes)
+                    clothesTable.clothesList.sort(by: <)
+                    appendedListOfClothesTables[i] = clothesTable
+                    break
+                } else {
+                    appendedListOfClothesTables.append( ClothesTable(headerDate: dateToUse, clothesList: listOfClothes))
+                }
+            }
+        }
+        return appendedListOfClothesTables
     }
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
+       
         
         if segue.identifier == "SaveClient" {
             client.name = clientNameTextField.text!
@@ -131,7 +176,7 @@ class ClientDetailTableViewController: UITableViewController {
             let testClothes1 = Clothes(id: 1, category: ClothesCategory.all[0] , price: 22, dateOfCreation: testDate, dateOfSell: nil, dateOfStore: nil, status: .inShop, moneyGivenBack: false)
             let testClothesList = [testClothes1]
             let clothesTable1 = ClothesTable(headerDate: testDate, clothesList: testClothesList)
-            client.listOfShopClothes = [clothesTable1]*/                       
+            client.listOfShopClothes = [clothesTable1] */
                 
             clothesListController.listOfShopClothes = client.listOfShopClothes
         } else if segue.identifier == "ShowSoldClothes" {

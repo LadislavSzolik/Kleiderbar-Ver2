@@ -10,16 +10,18 @@ import UIKit
 
 class ListOfSoldClothesTableViewController: UITableViewController {
 
-    var listOfSoldClothes = [String: [Clothes]]()
+    var listOfSoldClothes = [ClothesTable]()
     var listOfClothesToBeMovedIntoShop = [Clothes]()
-    var listOfToBeStoredClothes = [String: [Clothes]]()
+    var listOfToBeStoredClothes = [Clothes]()
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var selectButton: UIBarButtonItem!
     var navigationToolbar: UIToolbar?
+    let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dateFormatter.dateFormat = "dd. MM. yyyy"
         tableView.allowsMultipleSelectionDuringEditing = true
         setupToolbar()
         updateNavigationActionButtons()
@@ -47,48 +49,61 @@ class ListOfSoldClothesTableViewController: UITableViewController {
     }
     
     @objc func putClothesToShop(sender: UIBarButtonItem) {
-        let selectedClothes = getSelectedClothesId()
-        
-        listOfClothesToBeMovedIntoShop = Clothes.getClothesArrayById(from: listOfSoldClothes, idList: selectedClothes)
-        listOfSoldClothes = Clothes.removeFromClothesList(from: listOfSoldClothes, idList: selectedClothes)
+        var selectedRows = tableView.indexPathsForSelectedRows!
+        var count = selectedRows.count-1
+        while count >=  0 {
+            let indexPath = selectedRows[count]
+            let toBeInShopClothes = listOfSoldClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+            listOfClothesToBeMovedIntoShop.append(toBeInShopClothes)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if listOfSoldClothes[indexPath.section].clothesList.count == 0 {
+                listOfSoldClothes.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            count = count - 1
+        }
         
         tableView.setEditing(false, animated: true)
-        tableView.reloadData()
         updateNavigationActionButtons()
     }
     
     @objc func storeClothes(sender: UIBarButtonItem) {
-        let selectedClothes = getSelectedClothesId()
-        
-        listOfToBeStoredClothes = Clothes.createNewClothesList(from: listOfSoldClothes, idList: selectedClothes, to: .inStore)
-        listOfSoldClothes = Clothes.removeFromClothesList(from: listOfSoldClothes, idList: selectedClothes)
+        var selectedRows = tableView.indexPathsForSelectedRows!
+        var count = selectedRows.count-1
+        while count >=  0 {
+            let indexPath = selectedRows[count]
+            var toBeStoredClothes = listOfSoldClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+            toBeStoredClothes.dateOfStore = Date()
+            listOfToBeStoredClothes.append(toBeStoredClothes)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if listOfSoldClothes[indexPath.section].clothesList.count == 0 {
+                listOfSoldClothes.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            count = count - 1
+        }
         
         tableView.setEditing(false, animated: true)
-        tableView.reloadData()
         updateNavigationActionButtons()
     }
     
     @objc func deleteClothes(sender: UIBarButtonItem) {
-        let selectedClothes = getSelectedClothesId()
-        
-        listOfSoldClothes = Clothes.removeFromClothesList(from: listOfSoldClothes, idList: selectedClothes)
-        
+        var selectedRows = tableView.indexPathsForSelectedRows!
+        var count = selectedRows.count-1
+        while count >=  0 {
+            let indexPath = selectedRows[count]
+            listOfSoldClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if listOfSoldClothes[indexPath.section].clothesList.count == 0 {
+                listOfSoldClothes.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            count = count - 1
+        }
         tableView.setEditing(false, animated: true)
-        tableView.reloadData()
         updateNavigationActionButtons()
     }
     
-    func getSelectedClothesId() -> [Int] {
-        var selectedClothesId = [Int]()
-        if let selectedClothesIndex = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedClothesIndex {
-                let key = Array(listOfSoldClothes.keys)[indexPath.section]
-                let clothesId = listOfSoldClothes[key]![indexPath.row].id
-                selectedClothesId.append(clothesId)
-            }
-        }
-        return selectedClothesId
-    }
     
     func updateNavigationActionButtons() {
         if tableView.isEditing {
@@ -112,9 +127,6 @@ class ListOfSoldClothesTableViewController: UITableViewController {
         }
     }
     
-    
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -126,41 +138,28 @@ class ListOfSoldClothesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let key = Array(listOfSoldClothes.keys)[section]
-        return key
+        let sectionHeader = dateFormatter.string(from: listOfSoldClothes[section].headerDate)
+        return sectionHeader
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let key = Array(listOfSoldClothes.keys)[section]
-       return listOfSoldClothes[key]!.count
+       return listOfSoldClothes[section].clothesList.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let key = Array(listOfSoldClothes.keys)[indexPath.section]
-        guard let subListOfClothes = listOfSoldClothes[key] else {fatalError("No Clothes for this section")}
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "SoldClothesCell", for: indexPath) as! SoldClothesTableViewCell
-        let soldClothes = subListOfClothes[indexPath.row]
-        
+        let soldClothes = listOfSoldClothes[indexPath.section].clothesList[indexPath.row]
         cell.clothesCategoryLabel.text = "\(soldClothes.id+1). \(soldClothes.category.name)"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
         let creationDateString = dateFormatter.string(from: soldClothes.dateOfCreation)
         cell.creationDateLabel.text = "Hinzugefügt: " + creationDateString
-        
         if let price = soldClothes.price {
            cell.priceLabel.text = "\(String(price)) Fr."
         } else {
             cell.priceLabel.text = "kein Price"
         }
-        
         return cell
     }
- 
 
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -185,11 +184,12 @@ class ListOfSoldClothesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .delete
     }
-    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 54
+    }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let key = Array(listOfSoldClothes.keys)[indexPath.section]
-            listOfSoldClothes[key]?.remove(at: indexPath.row)
+            listOfSoldClothes[indexPath.section].clothesList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

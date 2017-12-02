@@ -31,7 +31,15 @@ struct UniqueClothesId: Codable {
     var id:Int
 }
 
-struct Clothes: Codable {
+struct Clothes: Codable, Equatable {
+    static func ==(lhs: Clothes, rhs: Clothes) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    static func < (lhs: Clothes, rhs: Clothes) -> Bool {
+        return lhs.id < rhs.id
+    }
+    
     var id: Int
     var category: ClothesCategory
     var price: Double?
@@ -177,17 +185,16 @@ struct Clothes: Codable {
     
     
     
-    static func removeFromClothesList(from listOfCurrentClothes: [String: [Clothes]], idList listOfClothesId: [Int] ) -> [String: [Clothes]] {
-        var newlistOfClothes =  [String: [Clothes]]()
-        
-        for currentClothes in listOfCurrentClothes {
-            let truncatedList = currentClothes.value.filter({ (clothes) -> Bool in
-                return !listOfClothesId.contains(where: { (id) -> Bool in
-                    return id == clothes.id
+    static func removeFromClothesList(from listOfCurrentClothes: [ClothesTable], idList selectedClothes: [Clothes] ) -> [ClothesTable] {
+        let newlistOfClothes = listOfCurrentClothes.map { (clothesTable) -> ClothesTable in
+            var item = clothesTable
+            item.clothesList = item.clothesList.filter({ (clothes) -> Bool in
+                return selectedClothes.contains(where: { (clothesIn) -> Bool in
+                    return clothesIn.id != clothes.id
                 })
             })
-            newlistOfClothes[currentClothes.key] = truncatedList
-        }
+            return item
+        }       
         return newlistOfClothes
     }
     

@@ -9,12 +9,13 @@
 import Foundation
 
 
+
 struct Client : Codable {
     var id: Int
     var name: String   
     var listOfShopClothes: [ClothesTable]
-    var listOfSoldClothes: [String: [Clothes]]
-    var listOfStoreClothes: [String: [Clothes]]
+    var listOfSoldClothes: [ClothesTable]
+    var listOfStoreClothes: [ClothesTable]
     var dateOfCreation: Date
     var totalNumberOfClothes: Int {
         var count = 0
@@ -22,12 +23,12 @@ struct Client : Codable {
             count = count + clothesTable.clothesList.count
         }
         
-        for keys in listOfSoldClothes {
-            count = count + keys.value.count
+        for clothesTable in listOfSoldClothes {
+            count = count + clothesTable.clothesList.count
         }
         
-        for keys in listOfStoreClothes {
-            count = count + keys.value.count
+        for clothesTable in listOfStoreClothes {
+            count = count + clothesTable.clothesList.count
         }
         return count
     }

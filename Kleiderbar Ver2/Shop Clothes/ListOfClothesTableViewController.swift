@@ -15,9 +15,8 @@ protocol ListOfClothesDelegate {
 class ListOfClothesTableViewController: UITableViewController, ClothesCellDelegate {
     
     var listOfShopClothes = [ClothesTable]()
-    var selectedClothes = [Clothes]()
-    var listOfToBeSoldClothes = [String: [Clothes]]()
-    var listOfToBeStoredClothes = [String: [Clothes]]()
+    var listOfToBeSoldClothes = [Clothes]()
+    var listOfToBeStoredClothes = [Clothes]()
     var clientId: Int?
     @IBOutlet weak var printButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -48,31 +47,61 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     }
     
     @objc func sellClothes(sender: UIBarButtonItem) {
-        
-        //listOfToBeSoldClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .sold)
-        //listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
-        
+        var selectedRows = tableView.indexPathsForSelectedRows!
+        var count = selectedRows.count-1
+        while count >=  0 {
+            let indexPath = selectedRows[count]
+            var sellingClothes = listOfShopClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+            sellingClothes.dateOfSell = Date()
+            listOfToBeSoldClothes.append(sellingClothes)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if listOfShopClothes[indexPath.section].clothesList.count == 0 {
+                listOfShopClothes.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            count = count - 1
+        }
         tableView.setEditing(false, animated: true)
-        tableView.reloadData()
         updateNavigationActionButtons()
     }
     
      @objc func storeClothes(sender: UIBarButtonItem) {
         
-        //listOfToBeStoredClothes = Clothes.createNewClothesList(from: listOfShopClothes, idList: selectedClothes, to: .inStore)
-        //listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
-        
-        tableView.setEditing(false, animated: true)
-        tableView.reloadData()
+        var selectedRows = tableView.indexPathsForSelectedRows!
+        var count = selectedRows.count-1
+        while count >=  0 {
+            let indexPath = selectedRows[count]
+            var storingClothes = listOfShopClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+            storingClothes.dateOfStore = Date()
+            listOfToBeStoredClothes.append(storingClothes)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if listOfShopClothes[indexPath.section].clothesList.count == 0 {
+                listOfShopClothes.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            count = count - 1
+        }
+        tableView.setEditing(false, animated: true)       
         updateNavigationActionButtons()
     }
     
     @objc func deleteClothes(sender: UIBarButtonItem) {
-        
-        //listOfShopClothes = Clothes.removeFromClothesList(from: listOfShopClothes, idList: selectedClothes)
-        
+        var selectedRows = tableView.indexPathsForSelectedRows!
+        var count = selectedRows.count-1
+        while count >=  0 {
+            let indexPath = selectedRows[count]
+            listOfShopClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+             tableView.deleteRows(at: [indexPath], with: .automatic)
+            if listOfShopClothes[indexPath.section].clothesList.count == 0 {
+                listOfShopClothes.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            count = count - 1
+        }
+       
         tableView.setEditing(false, animated: true)
-        tableView.reloadData()
         updateNavigationActionButtons()
     }        
     
@@ -105,7 +134,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         cell.delegate = self
         let clothesTableList = listOfShopClothes[indexPath.section].clothesList
         let clothes = clothesTableList[indexPath.row]
-        cell.clothesCategoryLabel?.text = "\(clothes.id+1). \(clothes.category.name)"
+        cell.clothesCategoryLabel?.text = "\(clothes.id+1). \(clothes.category.name)"        
         if let price = clothes.price {
             cell.priceTextField.text = "\(String(price))"
         } else {
@@ -120,18 +149,12 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         }
         if let selectedRows = tableView.indexPathsForSelectedRows {
             if selectedRows.count > 0 {
-                selectedClothes.append(listOfShopClothes[indexPath.section].clothesList[indexPath.row])
                 toggleToolbarButtons(isEnabled: true)
             }
         }
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let index = selectedClothes.index(where: {(clothes) -> Bool in
-            return clothes.id == listOfShopClothes[indexPath.section].clothesList[indexPath.row].id
-        }) {
-            selectedClothes.remove(at: index)
-        }
         if tableView.indexPathsForSelectedRows == nil {
             toggleToolbarButtons(isEnabled: false)
         }
@@ -147,7 +170,8 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            listOfShopClothes[indexPath.section].clothesList.remove(at: indexPath.row)
+            
+            //listOfShopClothes[indexPath.section].clothesList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

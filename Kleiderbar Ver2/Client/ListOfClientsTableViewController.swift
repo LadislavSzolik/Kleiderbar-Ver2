@@ -10,9 +10,12 @@ import UIKit
 
 class ListOfClientsTableViewController: UITableViewController {
 
+    let dateFormatter = DateFormatter()
     var listOfClients = [Client] ()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+         dateFormatter.dateFormat = "dd.MM.yyyy"
         if let storedClients = Client.loadClients() {
             listOfClients = storedClients
         }
@@ -20,11 +23,9 @@ class ListOfClientsTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -37,11 +38,7 @@ class ListOfClientsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath)
         let client = listOfClients[indexPath.row]
         cell.textLabel?.text = "\(client.id). \(client.name)"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
         let dateOfCreation = dateFormatter.string(from: client.dateOfCreation)
-        
         cell.detailTextLabel?.text = "Datum: \(dateOfCreation), Kleider:  \(client.totalNumberOfClothes)"
         return cell
     }
@@ -67,7 +64,6 @@ class ListOfClientsTableViewController: UITableViewController {
                 } else {
                     listOfClients.append(client)
                 }
-               
             }
         }
         Client.saveClients(listOfClients)
