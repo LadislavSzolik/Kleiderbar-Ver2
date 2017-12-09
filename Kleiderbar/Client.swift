@@ -8,7 +8,21 @@
 
 import Foundation
 
-
+struct Commission : Codable {
+    var total: Double {
+        return listOfClothes.reduce(0, { (currentTotal, newValue) -> Double in
+            return currentTotal + newValue.price!
+        })
+    }
+    var listOfClothes: [Clothes]
+    var dateOfCommission: Date
+    
+    func isClothesInCommission(id: Int) -> Bool {
+        return listOfClothes.contains(where: { (clothes) -> Bool in
+            return clothes.id == id
+        })
+    }
+}
 
 struct Client : Codable {
     var id: Int
@@ -16,6 +30,7 @@ struct Client : Codable {
     var listOfShopClothes: [ClothesTable]
     var listOfSoldClothes: [ClothesTable]
     var listOfStoreClothes: [ClothesTable]
+    var listOfCommissions: [Commission]
     var dateOfCreation: Date
     var totalNumberOfClothes: Int {
         var count = 0
@@ -31,6 +46,52 @@ struct Client : Codable {
             count = count + clothesTable.clothesList.count
         }
         return count
+    }
+    
+    var totalCommission: Double {
+        return sumOfSoldButNotPayedBack * 0.4
+    }
+    
+    var sumOfSoldButNotPayedBack: Double {
+        return listOfSoldClothes.reduce(0, {$0 + $1.commissions})
+    }
+    
+    mutating func setMoneyBack() {
+        listOfSoldClothes = listOfSoldClothes.map({ (clothesTable) -> ClothesTable in
+            var item = clothesTable
+            item.setMoneyBack()
+            return item
+        })
+    }
+    
+    mutating func payMoneyBack() {
+        let listOfNewlyPayedbackClothes = listOfSoldClothes.reduce([Clothes](), { (currentList, clothesTable) -> [Clothes] in
+            var list = currentList
+            list.append(contentsOf: clothesTable.getClothesForMoneyBack())
+            return list
+        })
+        let commission = Commission(listOfClothes: listOfNewlyPayedbackClothes, dateOfCommission: Date())
+        listOfCommissions.append(commission)
+        
+        setMoneyBack()
+    }
+    
+    mutating func undoMoneyBack(listOfOfClothesToRevert: [Clothes]) {
+        for i in 0...listOfSoldClothes.count - 1 {
+            let clothesTable = listOfSoldClothes[i]
+            let newClothetList = clothesTable.clothesList.map({ (clothes) -> Clothes in
+                var item = clothes
+                if listOfOfClothesToRevert.contains(where: { (clothes) -> Bool in
+                    return clothes.id == item.id
+                }) {
+                    item.moneyGivenBack = false
+                }
+                return item
+            })
+            listOfSoldClothes[i].clothesList = newClothetList
+        }
+        let clothesId = listOfOfClothesToRevert.first!.id
+        listOfCommissions = listOfCommissions.filter { !$0.isClothesInCommission(id: clothesId)}
     }
     
     static var globalId = 0

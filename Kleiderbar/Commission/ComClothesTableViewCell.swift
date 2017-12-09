@@ -1,23 +1,22 @@
 //
-//  SoldClothesTableViewCell.swift
-//  Kleiderbar Ver2
+//  ComClothesTableViewCell.swift
+//  Kleiderbar
 //
-//  Created by Ladislav Szolik on 16.11.17.
+//  Created by Ladislav Szolik on 06.12.17.
 //  Copyright © 2017 Ladislav Szolik. All rights reserved.
 //
 
 import UIKit
 
-class SoldClothesTableViewCell: UITableViewCell {
+class ComClothesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var clothesCategoryLabel: UILabel!
+    @IBOutlet weak var datumLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var creationDateLabel: UILabel!
-    @IBOutlet weak var moneyGivenBack: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        moneyGivenBack.isHidden = true
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

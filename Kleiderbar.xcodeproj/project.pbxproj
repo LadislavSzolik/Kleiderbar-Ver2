@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		84111DDA1FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */; };
 		84111DDC1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */; };
+		84672BE71FD7B1BB00452DD5 /* CommissionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84672BE61FD7B1BB00452DD5 /* CommissionsTableViewController.swift */; };
+		84672BEA1FD7B6DE00452DD5 /* CommissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84672BE91FD7B6DE00452DD5 /* CommissionTableViewCell.swift */; };
+		84672BEC1FD88AC800452DD5 /* ComClothesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84672BEB1FD88AC800452DD5 /* ComClothesTableViewController.swift */; };
+		84672BEE1FD88B1100452DD5 /* ComClothesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84672BED1FD88B1100452DD5 /* ComClothesTableViewCell.swift */; };
 		849F07531FCB02790056A6EA /* ListOfStoreClothesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F07521FCB02790056A6EA /* ListOfStoreClothesTableViewController.swift */; };
 		849F07551FCB03570056A6EA /* StoreClothesCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F07541FCB03570056A6EA /* StoreClothesCellTableViewCell.swift */; };
 		84C3055E1FB73147008D33E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3055D1FB73147008D33E7 /* AppDelegate.swift */; };
@@ -28,6 +32,10 @@
 /* Begin PBXFileReference section */
 		84111DD91FBD94F500FFFA17 /* ListOfSoldClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSoldClothesTableViewController.swift; sourceTree = "<group>"; };
 		84111DDB1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoldClothesTableViewCell.swift; sourceTree = "<group>"; };
+		84672BE61FD7B1BB00452DD5 /* CommissionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionsTableViewController.swift; sourceTree = "<group>"; };
+		84672BE91FD7B6DE00452DD5 /* CommissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionTableViewCell.swift; sourceTree = "<group>"; };
+		84672BEB1FD88AC800452DD5 /* ComClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComClothesTableViewController.swift; sourceTree = "<group>"; };
+		84672BED1FD88B1100452DD5 /* ComClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComClothesTableViewCell.swift; sourceTree = "<group>"; };
 		849F07521FCB02790056A6EA /* ListOfStoreClothesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfStoreClothesTableViewController.swift; sourceTree = "<group>"; };
 		849F07541FCB03570056A6EA /* StoreClothesCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreClothesCellTableViewCell.swift; sourceTree = "<group>"; };
 		84C3055A1FB73147008D33E7 /* Kleiderbar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kleiderbar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +65,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84672BE81FD7B6B500452DD5 /* Commission */ = {
+			isa = PBXGroup;
+			children = (
+				84672BE61FD7B1BB00452DD5 /* CommissionsTableViewController.swift */,
+				84672BE91FD7B6DE00452DD5 /* CommissionTableViewCell.swift */,
+				84672BEB1FD88AC800452DD5 /* ComClothesTableViewController.swift */,
+				84672BED1FD88B1100452DD5 /* ComClothesTableViewCell.swift */,
+			);
+			path = Commission;
+			sourceTree = "<group>";
+		};
 		849F07511FCB02630056A6EA /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +112,7 @@
 				84F538041FC981940082F40D /* New Clothes */,
 				84F538071FCA00D40082F40D /* Sold Clothes */,
 				849F07511FCB02630056A6EA /* Store */,
+				84672BE81FD7B6B500452DD5 /* Commission */,
 				84C305611FB73147008D33E7 /* Main.storyboard */,
 				84C305641FB73147008D33E7 /* Assets.xcassets */,
 				84C305661FB73147008D33E7 /* LaunchScreen.storyboard */,
@@ -216,7 +236,11 @@
 				84C3057E1FB79F20008D33E7 /* ClientDetailTableViewController.swift in Sources */,
 				84C3057C1FB79D73008D33E7 /* ListOfClientsTableViewController.swift in Sources */,
 				84111DDC1FBDAE8F00FFFA17 /* SoldClothesTableViewCell.swift in Sources */,
+				84672BEE1FD88B1100452DD5 /* ComClothesTableViewCell.swift in Sources */,
+				84672BE71FD7B1BB00452DD5 /* CommissionsTableViewController.swift in Sources */,
 				84C3057A1FB790C8008D33E7 /* Client.swift in Sources */,
+				84672BEC1FD88AC800452DD5 /* ComClothesTableViewController.swift in Sources */,
+				84672BEA1FD7B6DE00452DD5 /* CommissionTableViewCell.swift in Sources */,
 				849F07551FCB03570056A6EA /* StoreClothesCellTableViewCell.swift in Sources */,
 				84C3055E1FB73147008D33E7 /* AppDelegate.swift in Sources */,
 				84C305741FB734FA008D33E7 /* Clothes.swift in Sources */,
@@ -361,13 +385,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HK2W6XPHLH;
 				INFOPLIST_FILE = "$(SRCROOT)/Kleiderbar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ch.szolik.Kleiderbar;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.szolik.kleiderbar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -377,13 +403,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HK2W6XPHLH;
 				INFOPLIST_FILE = "$(SRCROOT)/Kleiderbar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ch.szolik.Kleiderbar;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.szolik.kleiderbar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

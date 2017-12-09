@@ -157,6 +157,11 @@ class ListOfSoldClothesTableViewController: UITableViewController {
         } else {
             cell.priceLabel.text = "kein Price"
         }
+        if soldClothes.moneyGivenBack {
+            cell.moneyGivenBack!.isHidden = false
+        } else {
+            cell.moneyGivenBack!.isHidden = true
+        }
         return cell
     }
 

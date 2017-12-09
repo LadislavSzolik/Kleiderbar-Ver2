@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ClientDetailTableViewController: UITableViewController {
+class ClientDetailTableViewController: UITableViewController, ComClothesDelegate {
+    
+    
   
     var client: Client!
     
@@ -17,6 +19,9 @@ class ClientDetailTableViewController: UITableViewController {
     @IBOutlet weak var numberOfSoldClothes: UILabel!
     @IBOutlet weak var numberOfStoreClothes: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var payButton: UIButton!
+    @IBOutlet weak var totalCommissionAmount: UILabel!
+    
     let dateFormatter = DateFormatter()
    
     override func viewDidLoad() {
@@ -27,11 +32,13 @@ class ClientDetailTableViewController: UITableViewController {
             clientNameTextField.text = client.name
         } else {
             Client.globalId = Client.loadLastClientId()
-            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [], listOfStoreClothes: [], dateOfCreation: Date() )
+            client = Client(id: Client.getNextId(), name: "", listOfShopClothes: [], listOfSoldClothes: [], listOfStoreClothes: [], listOfCommissions: [], dateOfCreation: Date() )
             Client.saveClientId(Client.globalId)
         }
         updateNumberOfClothesLabels()
-        udateSaveButton();
+        udateSaveButton()
+        updateTotalCommission()
+        updatePayButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +66,10 @@ class ClientDetailTableViewController: UITableViewController {
         numberOfSoldClothes.text = "\(soldCount) Stk"
         numberOfStoreClothes.text = "\(storeCount) Stk"
     }
+    
+    func updateTotalCommission() {
+        totalCommissionAmount.text = "\(client.totalCommission) Fr."
+    }
  
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -79,6 +90,13 @@ class ClientDetailTableViewController: UITableViewController {
     @IBAction func clientNameEditingChanged(_ sender: Any) {
         udateSaveButton()
     }
+    
+    @IBAction func payButtonPressed(_ sender: Any) {
+        client.payMoneyBack()
+        updateTotalCommission()
+        updatePayButton()
+    }
+    
     
     // MARK: - Unwind Segue
     
@@ -121,6 +139,8 @@ class ClientDetailTableViewController: UITableViewController {
             }
         }
         updateNumberOfClothesLabels()
+        updateTotalCommission()
+        updatePayButton()
     }
     
     func appendListOfClothes(target listOfClothesTables: [ClothesTable], with listOfClothes: [Clothes], for clothesStatus: ClothesStatus ) -> [ClothesTable] {
@@ -152,14 +172,25 @@ class ClientDetailTableViewController: UITableViewController {
                 }
             }
         }
-        return appendedListOfClothesTables
+        return appendedListOfClothesTables.sorted(by: { $0.headerDate.compare($1.headerDate) == .orderedDescending })
     }
     
+    func didUndoPressed(listOfClothes: [Clothes]) {
+        client.undoMoneyBack(listOfOfClothesToRevert: listOfClothes)
+        updateTotalCommission()
+        updatePayButton()
+    }
+    
+    func updatePayButton() {
+        if client.totalCommission > 0 {
+            payButton.isEnabled = true
+        } else {
+            payButton.isEnabled = false
+        }
+    }
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       
-        
         if segue.identifier == "SaveClient" {
             client.name = clientNameTextField.text!
             
@@ -187,6 +218,10 @@ class ClientDetailTableViewController: UITableViewController {
             let navigationController = segue.destination as! UINavigationController
             let storeClothesController = navigationController.topViewController as! ListOfStoreClothesTableViewController
             storeClothesController.listOfStoreClothes = client.listOfStoreClothes
+        } else if segue.identifier == "ShowCommissions" {
+            let commissionsController = segue.destination as! CommissionsTableViewController
+            commissionsController.clientDetailsController = self
+            commissionsController.commissions = client.listOfCommissions
         }
     }
     

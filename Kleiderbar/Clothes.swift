@@ -231,6 +231,28 @@ struct Clothes: Codable, Equatable {
 struct ClothesTable: Codable {
     var headerDate: Date
     var clothesList: [Clothes]
+    var commissions: Double {
+        return clothesList.reduce(0, { (currentTotal, clothes) -> Double in
+            if !clothes.moneyGivenBack {
+                if let price = clothes.price {
+                    return currentTotal + price
+                }
+            }
+            return currentTotal
+        })
+    }
+    mutating func setMoneyBack() {
+        clothesList = clothesList.map({ (clothes) -> Clothes in
+            var item = clothes
+            item.moneyGivenBack = true
+            return item
+        })
+    }
+    func getClothesForMoneyBack() -> [Clothes] {
+        return clothesList.filter { (clothes) -> Bool in
+            return clothes.moneyGivenBack == false
+        }
+    }
 }
 
 enum ClothesStatus: String, Codable  {

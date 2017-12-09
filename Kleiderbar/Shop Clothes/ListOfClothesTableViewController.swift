@@ -140,6 +140,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         } else {
             cell.priceTextField.text = ""
         }
+        
         return cell
     }
     
@@ -211,14 +212,14 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
             for clothes in section.clothesList {
                 count = count + 1
                 
-                if count % 12 == 1 {
+                if count % 9 == 1 {
                     pdfContent = pdfContent +  "<div style=\"height: 841.8px; padding: 50px; \"> "
                 }
                 
                 let divLabel = generateDivLabel(clientId: clientId, clothes: clothes)
                 pdfContent = pdfContent + divLabel
                 
-                if (count != 0 && count % 12 == 0) || count == soldCount  {
+                if (count != 0 && count % 9 == 0) || count == soldCount  {
                     pdfContent = pdfContent +  "</div>"
                     pdfPages.append(pdfContent)
                     pdfContent = ""
@@ -240,7 +241,7 @@ class ListOfClothesTableViewController: UITableViewController, ClothesCellDelega
         if let setPrice = clothes.price {
             price = "\(String(setPrice)) Fr."
         }
-        return "<div style=\"font-size: 13px; width: 158.7px; height:200px; float:left; border:1px solid black; margin: 5px;\"> <div style=\"margin-top:10px;margin-bottom:4px; margin-left:10px\">Kl. id: "+"\(cothesId)"+"</div>  <div style=\"margin-bottom:4px;  margin-left:10px\" >Kl. art: "+"\(clothesCategory)"+"</div>  <div style=\"margin-bottom:4px; margin-left:10px\">Kund id: "+"\(clientId)"+"</div>  <div style=\"margin-bottom:8px; margin-left:10px\">Datum: "+"\(clothesCreated)"+"</div>  <div style=\"margin-bottom:8px; margin-left:10px\">Groesse: </div><div style=\"margin-left:10px\">Price: <span style=\"font-size:16px\"><b>"+"\(price)"+"</b></span></div></div>"
+        return "<div style=\"font-size: 11px; width: 158.7px; float:left; margin: 5px;\"><div style=\"border:1px solid black;\"><div style=\"margin-top:10px;margin-bottom:4px; margin-left:10px\">Kl. id: "+"\(cothesId)"+"</div>  <div style=\"margin-bottom:4px;  margin-left:10px\" >Kl. art: "+"\(clothesCategory)"+"</div>  <div style=\"margin-bottom:4px; margin-left:10px\">Kund id: "+"\(clientId)"+"</div>  <div style=\"margin-bottom:8px; margin-left:10px\">Datum: "+"\(clothesCreated)"+"</div>  <div style=\"margin-bottom:8px; margin-left:10px\">Groesse: </div><div style=\"margin-left:10px; margin-bottom: 8px;\">Price: <span style=\"font-size:14px;\"><b>"+"\(price)"+"</b></span></div> </div><div style=\" border:1px solid black;\"><div style=\"margin-top:10px;margin-bottom:4px; margin-left:10px\">Kl. id: "+"\(cothesId)"+"</div>  <div style=\"margin-bottom:4px;  margin-left:10px\" >Kl. art: "+"\(clothesCategory)"+"</div>  <div style=\"margin-bottom:4px; margin-left:10px\">Kund id: "+"\(clientId)"+"</div>  <div style=\"margin-bottom:8px; margin-left:10px\">Datum: "+"\(clothesCreated)"+"</div>  <div style=\"margin-bottom:8px; margin-left:10px\">Groesse: </div><div style=\"margin-left:10px;margin-bottom: 8px;\">Price: <span style=\"font-size:14px\"><b>"+"\(price)"+"</b></span></div> </div> </div>"
     }
     
     
